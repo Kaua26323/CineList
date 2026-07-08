@@ -32,10 +32,10 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
 
 ### FR2: Movie Details Page
 
-- **Description:** Display all information about the selected movie
+- **Description:** Display more information about the selected movie
 - **Displayed data:**
   - Poster (large image)
-  - Title and release year
+  - Title and release year - (Year/Month/Day)
   - Full synopsis/description
   - TMDB rating
   - Genres
@@ -44,7 +44,7 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
 
 - **Interactions:**
   - "Favorite" / "Remove from Favorites" button (toggleable)
-  - "Back to Home" button to return to the home page
+  - "Back" button to return to the home page
 
 - **Synchronization:** When favoriting/unfavoriting, update the global state
 
@@ -52,14 +52,18 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
 
 - **Persistence:** Store the IDs of favorited movies in `localStorage`
 - **Synchronization:** Update all components in real time when a movie is favorited/removed
-- **Context:** `FavoritesContext` provides global state and functions (`addFavorite`, `removeFavorite`, `isFavorited`)
+- **Context:** `FavoritesContext` provides global state and functions (`addFavoriteMovie`, `removeFavoriteMovie`, `isFavorited`)
 
 ### FR4: Favorites Page
 
-- **Description:** Simplified listing of the movies favorited by the user
+- **Description:** Show the list of movies favorited by the user
 - **Displayed data:**
   - Movie poster
   - Title
+  - TMDB rating
+  - release year - (Year)
+  - Runtime
+  - Genres
   - "Details" button (redirects to the details page)
   - "Remove" button (removes the movie from the favorites list)
 
@@ -96,8 +100,9 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
 {
   "react": "^19.2.0",
   "react-dom": "^19.2.0",
-  "react-router-dom": "^8.x",
-  "@tanstack/react-query": "^5.x"
+  "react-router": "^8.x",
+  "@tanstack/react-query": "^5.x",
+  "lucide-react": "^1.x"
 }
 ```
 
@@ -126,9 +131,9 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
   - `getMovieDetails(id)` — Fetch details for a specific movie
   - Centralized error handling
 
-- `favoritesService.ts` — Favorites management with localStorage
-  - `getFavoritesFromStorage()` — Read favorites from localStorage
-  - `saveFavoritesToStorage(favorites)` — Save favorites
+- `favoritesStorage.ts` — Favorites management with localStorage
+  - `getFavoritesMoviesFromStorage()` — Read favorites from localStorage
+  - `saveFavoriteMovieToStorage(favorites)` — Save favorites
   - `isFavorited(movieId)` — Check whether a movie is favorited
 
 #### **State Layer (Contexts + Queries)**
@@ -136,12 +141,12 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
 - `FavoritesContext.tsx` — Context provider that:
   - Manages global favorites state
   - Automatically synchronizes with localStorage
-  - Exposes hooks: `useFavorites()`
-  - Available functions: `addFavorite(movie)`, `removeFavorite(movieId)`, `isFavorited(movieId)`
+  - Exposes hooks: `useFavoritesContext()`
+  - Available functions: `addFavoriteMovie(movie)`, `removeFavoriteMovie(movieId)`, `isFavorited(movieId)`
 
 - **TanStack Query** — Custom queries:
-  - `useGetPopularMovies()` — Cache popular movies
-  - `useGetMovieDetails(movieId)` — Cache movie details
+  - `usePopularMovies()` — Cache popular movies
+  - `useMovieDetails(movieId)` — Cache movie details
 
 #### **UI Layer (Components)**
 
@@ -149,7 +154,6 @@ Favorites are persisted in `localStorage` and automatically synchronized across 
 - `MovieDetails.tsx` — Page with complete movie information
 - `Favorites.tsx` — Page with the favorites list
 - `MovieCard.tsx` — Reusable card displaying poster + title
-- `MovieGrid.tsx` — Responsive movie grid
 - `LoadingSpinner.tsx` — Loading indicator
 - `ErrorBoundary.tsx` — React error handling
 - `App.tsx` — Router and providers
@@ -185,28 +189,27 @@ src/
 │   └── NotFound.tsx          # 404 page
 ├── components/
 │   ├── MovieCard.tsx         # Individual movie card
-│   ├── MovieGrid.tsx         # Reusable grid
 │   ├── LoadingSpinner.tsx    # Loading spinner
 │   ├── ErrorMessage.tsx      # Error message
 │   └── ErrorBoundary.tsx     # Error boundary
 ├── contexts/
-│   └── FavoritesContext.tsx  # Favorites provider
+│   └── favorites/            # Favorites context/provider
 ├── hooks/
-│   ├── useFavorites.ts       # Hook to access the favorites context
-│   ├── useMovies.ts          # Popular movies query hook
+│   ├── usePopularMovies.ts   # Popular movies query hook
+│   ├── useFavoritesContext.ts # Hook to access favorites context
 │   └── useMovieDetails.ts    # Details query hook
 ├── services/
+│   ├── apiRequest.ts         # fetch config
 │   ├── tmdbApi.ts            # API calls
-│   ├── favoritesService.ts   # localStorage CRUD
+│   ├── favoritesStorage.ts   # localStorage CRUD
 ├── types/
-│   └── movie.ts              # TypeScript movie types
-├── styles/
-│   └── globals.module.css    # Global styles
+│   ├── api-protocol.ts       # Tmdb response types
+│   └── movies-protocol.ts    # TypeScript movie types
 ├── utils/
 │   └── constants.ts          # URLs, keys, constants
 ├── App.tsx                   # Main router
-├── main.tsx                  # Entry point
-└── App.module.css
+├── globals.css               # Global styles
+└── main.tsx                  # Entry point
 ```
 
 ---
@@ -215,15 +218,9 @@ src/
 
 ### `MovieCard.tsx`
 
-- **Props:** `movie: Movie`, `onMovieClick?: () => void`, `showActions?: boolean`
+- **Props:** `movie: Movie`, `onMovieClick?: () => void`
 - **Renders:** Poster, title, favorite indicator
 - **Styles:** CSS Module with hover effect
-
-### `MovieGrid.tsx`
-
-- **Props:** `movies: Movie[]`, `onMovieClick?: (movieId: number) => void`
-- **Renders:** Responsive grid (auto-fit columns)
-- **Styles:** CSS Module with media queries
 
 ### `LoadingSpinner.tsx`
 
@@ -242,7 +239,7 @@ src/
 ### **Scenario 1: Discover and Favorite a Movie**
 
 1. User accesses the Home page → popular movie list loads
-2. Clicks on a movie → navigates to `/movies/:id`
+2. Clicks on a movie → navigates to `/movie/:id`
 3. Views the movie details
 4. Clicks "Favorite" → adds it to the context + localStorage
 5. The button text changes to "Remove from Favorites"
@@ -269,8 +266,8 @@ src/
 | -------------------- | ----------------------------------------------------- |
 | TMDB request failure | Display error message + retry button                  |
 | Movie not found      | Redirect to 404 page or home                          |
-| localStorage full    | Alert user + remove the oldest movie                  |
-| API rate limit       | Wait and automatically retry with exponential backoff |
+| localStorage full    | Log the storage error and keep the UI responsive      |
+| API rate limit       | Display an error message and allow retry              |
 
 ---
 
@@ -278,8 +275,8 @@ src/
 
 ### Expected Coverage
 
-- **Hooks:** `useFavorites()`, `useMovies()`, `useMovieDetails()` — unit tests
-- **Services:** `tmdbApi.ts`, `favoritesService.ts` — request mocks
+- **Hooks:** `useFavoritesContext()`, `usePopularMovies()`, `useMovieDetails()` — unit tests
+- **Services:** `tmdbApi.ts`, `favoritesStorage.ts` — request mocks
 - **Contexts:** `FavoritesContext` — render + provider tests
 - **Components:** Render, interaction, and state tests
 
@@ -295,7 +292,7 @@ src/
 
 - [ ] Search/filter functionality
 - [ ] Pagination or infinite scroll
-- [ ] Dark mode
+- [ ] Light mode
 - [ ] Custom user ratings
 - [ ] Favorite sharing
 - [ ] Custom backend to synchronize favorites across devices
