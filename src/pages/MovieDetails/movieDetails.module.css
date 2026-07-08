@@ -1,0 +1,215 @@
+.container {
+  width: 100%;
+  max-width: 75rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+.backButton,
+.favoriteButton {
+  align-self: flex-start;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--color-primary-700);
+  border-radius: 6px;
+  font: inherit;
+  font-weight: bold;
+}
+
+.favoriteButton {
+  width: 100%;
+  justify-self: stretch;
+  border-color: #0f766e;
+  background-color: #0f766e;
+  color: var(--color-text);
+  align-self: center;
+}
+
+.layout {
+  display: flex;
+  align-items: start;
+  gap: 2rem;
+}
+
+.postPanel {
+  width: 100%;
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.postPanel div,
+.postPanel p {
+  align-self: center;
+}
+
+.postPanel p {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  margin: 0;
+  border: 1.5px solid #1c4d2e;
+  border-radius: 4px;
+  background-color: #7ef7dd;
+  color: #115e59;
+  font-weight: bold;
+  text-align: center;
+}
+
+.posterImage,
+.posterFallback {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  background-color: var(--color-card);
+  object-fit: cover;
+}
+
+.posterFallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.detailsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.heading p {
+  text-align: start;
+  color: #0f766e;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.heading h1 {
+  font-size: 2.4rem;
+}
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.metadata div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: #121212;
+}
+
+.metadata dt {
+  color: var(--color-text-muted);
+  font-weight: bold;
+}
+
+.metadata dd {
+  font-weight: 700;
+}
+
+.overviewSection,
+.castSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.overviewSection h2 {
+  font-size: 1.6rem;
+}
+
+.overviewSection p {
+  color: var(--color-text-muted);
+}
+
+.castList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.castMembers {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: #121212;
+}
+
+.castMemberImage,
+.profileFallback {
+  width: 3.5rem;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.profileFallback {
+  display: grid;
+  place-items: center;
+  background-color: var(--color-card);
+  color: var(--color-text-muted);
+  font-weight: bold;
+}
+
+.castName,
+.castCharacter {
+  overflow-wrap: anywhere;
+}
+
+.castName {
+  color: var(--color-text);
+  font-weight: bold;
+}
+.castCharacter {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 650px) {
+  .layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .postPanel {
+    max-width: 23rem;
+    margin: 0 auto;
+  }
+
+  .posterImage,
+  .posterFallback {
+    border-radius: 10px;
+  }
+
+  .heading {
+    align-items: center;
+  }
+
+  .overviewSection,
+  .castSection {
+    text-align: center;
+  }
+}
