@@ -9,6 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "lint": "eslint .",
     "preview": "vite preview"
   },
