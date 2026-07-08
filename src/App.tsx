@@ -1,19 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import { toast } from "sonner";
+
+import "./globals.css";
+import { Home } from "./pages/Home";
+import { AppLayout } from "@/components/AppLayout";
+import { MovieDetails } from "./pages/MovieDetails";
+import { Favorites } from "./pages/Favorites";
+import { NotFound } from "@/pages/NotFound";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              Render the home page{" "}
-              <button onClick={() => toast("This is working!")}>Active</button>
-            </div>
-          }
-        />
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
