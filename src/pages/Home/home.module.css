@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  max-width: 75rem;
+  padding: 0 1.2rem;
+  margin: 1rem auto;
+}
+
+.header {
+  margin-bottom: 1.3rem;
+}
+
+.title {
+  font-size: 2rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.movieGrid {
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+@media (min-width: 640px) {
+  .movieGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .movieGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .movieGrid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,85 @@
+.card {
+  width: 100%;
+  max-width: 12rem;
+}
+.contentButton {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  border: 0;
+  padding: 0;
+  border-radius: 8px;
+  background-color: transparent;
+  color: inherit;
+  text-align: left;
+  transition: all 160ms ease;
+}
+
+.contentButton:focus-visible,
+.actionButton:focus-visible {
+  outline: 3px solid var(--primary-700);
+  outline-offset: 3px;
+}
+.figure {
+  position: relative;
+  margin: 0;
+}
+
+.posterImg,
+.posterFallback {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  background-color: var(--color-card);
+  object-fit: cover;
+  transition: all 160ms ease;
+}
+
+.contentButton:hover .posterImg,
+.contentButton:hover .posterFallback {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 20px var(--color-primary-400);
+}
+
+.posterFallback {
+  display: grid;
+  padding: 1rem;
+  text-align: center;
+  place-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+.favoriteBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 1px;
+  max-width: calc(100% - 1rem);
+  padding: 0.25rem 0.45rem;
+  border-radius: 4px;
+  background-color: var(--color-primary-400);
+  color: var(--color-text-over-primary);
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+.title {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-text);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.actions {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .card {
+    max-width: 11rem;
+  }
+}
