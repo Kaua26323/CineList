@@ -1,5 +1,35 @@
 # UI and Service Contract: CineList Movie Catalog and Favorites
 
+## Visual Direction
+
+CineList should use a dark movie-catalog visual style.
+
+### Color Tokens
+
+- Background: #0f1117
+- Surface: #181b22
+- Surface elevated: #1f2430
+- Primary: #e8c97a
+- Primary hover: #f8e006
+- Danger: #e50914
+- Danger hover: #f43f46
+- Text primary: #f5f5f5
+- Text muted: #a1a1aa
+- Text secondary: #a8b0c0
+- Border: #2a2e38
+- Error: #e50914
+- Success: #0bcf0b
+
+### UI Style
+
+- Use dark backgrounds with linear gradient and high contrast text.
+- Movie posters should be the visual focus.
+- Cards should use subtle borders, rounded corners, and hover elevation.
+- Primary actions should use the primary color.
+- Favorite indicators may use primary color to represent saved movies.
+- Error states should be visually clear but not aggressive.
+- Avoid adding light mode in this phase.
+
 ## Routes
 
 ### Home Route: `/`
