@@ -29,6 +29,7 @@ Templates requiring updates:
 - reviewed: AGENTS.md
 Follow-up TODOs: none
 -->
+
 # CineList Constitution
 
 ## Core Principles
@@ -71,7 +72,7 @@ desynchronizing that state breaks the primary value of the application.
 
 TMDB API calls, request configuration, response normalization, and error mapping
 MUST stay inside the service layer or service-specific query hooks. React
-components MUST NOT contain direct `fetch` or `axios` request logic for TMDB.
+components MUST NOT contain direct `fetch`request logic for TMDB.
 Components may call typed services, context APIs, or hooks that encapsulate
 request behavior.
 

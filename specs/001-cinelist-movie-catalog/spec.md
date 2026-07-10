@@ -1,6 +1,6 @@
 # Feature Specification: CineList Movie Catalog
 
-**Feature Branch**: `001-cineList-movie-catalog`
+**Feature Branch**: `001-cinelist-movie-catalog`
 
 **Created**: 2026-07-08
 
