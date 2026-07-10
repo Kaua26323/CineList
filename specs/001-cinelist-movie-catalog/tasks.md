@@ -28,15 +28,15 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T008 [P] Define typed `AppError` and error factory helpers in src/types/errors.ts
-- [ ] T009 [P] Define TMDB DTO, MovieSummary, MovieDetails, CastMember, FavoriteMovie, and FavoriteCollection types in src/types/movies.ts
-- [ ] T010 [P] Define TMDB and favorites constants in src/utils/constants.ts
-- [ ] T011 [P] Create reusable Button component with CSS Module styles in src/components/Button/Button.tsx and src/components/Button/Button.module.css
-- [ ] T012 [P] Create reusable LoadingSpinner component with CSS Module styles in src/components/LoadingSpinner/LoadingSpinner.tsx and src/components/LoadingSpinner/LoadingSpinner.module.css
-- [ ] T013 [P] Create reusable ErrorMessage component with retry/link support in src/components/ErrorMessage/ErrorMessage.tsx and src/components/ErrorMessage/ErrorMessage.module.css
-- [ ] T014 [P] Create PageShell layout with semantic header/nav/main landmarks in src/components/PageShell/PageShell.tsx and src/components/PageShell/PageShell.module.css
-- [ ] T015 Create app provider composition for BrowserRouter, QueryClientProvider, FavoritesProvider, routes, and PageShell in src/App.tsx
-- [ ] T016 [P] Create NotFound route component with accessible recovery link in src/pages/NotFound.tsx and src/pages/NotFound.module.css
+- [X] T008 [P] Define typed `AppError` and error factory helpers in src/types/errors.ts
+- [X] T009 [P] Define TMDB DTO, MovieSummary, MovieDetails, CastMember, FavoriteMovie, and FavoriteCollection types in src/types/movies.ts
+- [X] T010 [P] Define TMDB and favorites constants in src/utils/constants.ts
+- [X] T011 [P] Create reusable Button component with CSS Module styles in src/components/Button/Button.tsx and src/components/Button/Button.module.css
+- [X] T012 [P] Create reusable LoadingSpinner component with CSS Module styles in src/components/LoadingSpinner/LoadingSpinner.tsx and src/components/LoadingSpinner/LoadingSpinner.module.css
+- [X] T013 [P] Create reusable ErrorMessage component with retry/link support in src/components/ErrorMessage/ErrorMessage.tsx and src/components/ErrorMessage/ErrorMessage.module.css
+- [X] T014 [P] Create PageShell layout with semantic header/nav/main landmarks in src/components/PageShell/PageShell.tsx and src/components/PageShell/PageShell.module.css
+- [X] T015 Create app provider composition for BrowserRouter, QueryClientProvider, FavoritesProvider, routes, and PageShell in src/App.tsx
+- [X] T016 [P] Create NotFound route component with accessible recovery link in src/pages/NotFound.tsx and src/pages/NotFound.module.css
 
 **Checkpoint**: Foundation ready; user story implementation can now begin.
 

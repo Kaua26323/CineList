@@ -1,0 +1,51 @@
+.container {
+  display: grid;
+  max-width: 38rem;
+  min-height: 24rem;
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-5);
+  place-content: center;
+  justify-items: center;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.title {
+  margin-bottom: var(--space-3);
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.message {
+  max-width: 30rem;
+  margin-bottom: var(--space-5);
+  color: var(--color-text-secondary);
+}
+
+.link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  padding: var(--space-3) var(--space-4);
+  align-items: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--color-primary-hover);
+}

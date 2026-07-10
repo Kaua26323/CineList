@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: var(--space-5);
+  gap: var(--space-4);
+  border: 0.0625rem solid color-mix(in srgb, var(--color-danger) 55%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--color-surface));
+}
+
+.icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  color: var(--color-danger);
+}
+
+.content {
+  min-width: 0;
+}
+
+.title {
+  margin-bottom: var(--space-2);
+  font-size: 1.25rem;
+}
+
+.message {
+  margin-bottom: 0;
+  color: var(--color-text-secondary);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.link {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.link:hover {
+  color: var(--color-primary-hover);
+}
