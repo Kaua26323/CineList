@@ -12,13 +12,13 @@
 
 **Purpose**: Prepare the Vite/React/TypeScript app for tested feature implementation.
 
-- [ ] T001 Add `test`, `test:run`, and `coverage` scripts and add `lucide-react` dependency in package.json
-- [ ] T002 [P] Configure Vitest jsdom setup in vite.config.ts
-- [ ] T003 [P] Create Testing Library setup imports in src/test/setup.ts
-- [ ] T004 [P] Create shared route/query render helpers in src/test/test-utils.tsx
-- [ ] T005 [P] Create global browser style baseline and shared CSS design tokens for CineList dark theme in src/styles/globals.css
-- [ ] T006 Import src/styles/globals.css from src/main.tsx
-- [ ] T007 [P] Document required TMDB environment variables in .env.example
+- [X] T001 Add `test`, `test:run`, and `coverage` scripts and add `lucide-react` dependency in package.json
+- [X] T002 [P] Configure Vitest jsdom setup in vite.config.ts
+- [X] T003 [P] Create Testing Library setup imports in src/test/setup.ts
+- [X] T004 [P] Create shared route/query render helpers in src/test/test-utils.tsx
+- [X] T005 [P] Create global browser style baseline and shared CSS design tokens for CineList dark theme in src/styles/globals.css
+- [X] T006 Import src/styles/globals.css from src/main.tsx
+- [X] T007 [P] Document required TMDB environment variables in .env.example
 
 ---
 
