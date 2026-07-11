@@ -22,6 +22,12 @@ const refreshedFavorite: FavoriteMovie = {
   voteAverage: 8.8,
 };
 
+const secondFavorite: FavoriteMovie = {
+  ...originalFavorite,
+  id: 7,
+  title: "Another Favorite",
+};
+
 function FavoritesHarness({ favorite = originalFavorite }: { favorite?: FavoriteMovie }) {
   const context = useFavoritesContext();
 
@@ -35,6 +41,12 @@ function FavoritesHarness({ favorite = originalFavorite }: { favorite?: Favorite
       {context.storageError && <p role="alert">{context.storageError.message}</p>}
       <button type="button" onClick={() => context.addFavorite(favorite)}>
         Add favorite
+      </button>
+      <button type="button" onClick={() => context.removeFavorite(42)}>
+        Remove favorite
+      </button>
+      <button type="button" onClick={() => context.removeFavorite(999)}>
+        Remove missing favorite
       </button>
     </div>
   );
@@ -90,7 +102,7 @@ describe("FavoritesProvider", () => {
   });
 
   it("keeps in-memory state and exposes a warning when persistence fails", () => {
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+    const setItemSpy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new DOMException("Quota exceeded", "QuotaExceededError");
     });
     renderHarness();
@@ -101,5 +113,55 @@ describe("FavoritesProvider", () => {
       "The Answer",
     );
     expect(screen.getByRole("alert")).toHaveTextContent(/couldn't be saved/i);
+    setItemSpy.mockRestore();
+  });
+
+  it("removes a favorite immediately and persists the remaining list", () => {
+    window.localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify([originalFavorite, secondFavorite]),
+    );
+    renderHarness();
+
+    fireEvent.click(screen.getByRole("button", { name: "Remove favorite" }));
+
+    expect(screen.getByLabelText("favorite count")).toHaveTextContent("1");
+    expect(screen.getByLabelText("favorite titles")).toHaveTextContent(
+      "Another Favorite",
+    );
+    expect(screen.getByLabelText("is favorite")).toHaveTextContent("false");
+    expect(JSON.parse(window.localStorage.getItem(FAVORITES_STORAGE_KEY) ?? "[]"))
+      .toEqual([secondFavorite]);
+  });
+
+  it("does not update state or storage when the movie ID is missing", () => {
+    window.localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify([originalFavorite]),
+    );
+    const setItemSpy = vi.spyOn(Storage.prototype, "setItem");
+    setItemSpy.mockClear();
+    renderHarness();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Remove missing favorite" }),
+    );
+
+    expect(screen.getByLabelText("favorite count")).toHaveTextContent("1");
+    expect(setItemSpy).not.toHaveBeenCalled();
+  });
+
+  it("persists an empty list when the final favorite is removed", () => {
+    window.localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify([originalFavorite]),
+    );
+    renderHarness();
+
+    fireEvent.click(screen.getByRole("button", { name: "Remove favorite" }));
+
+    expect(screen.getByLabelText("favorite count")).toHaveTextContent("0");
+    expect(JSON.parse(window.localStorage.getItem(FAVORITES_STORAGE_KEY) ?? "[]"))
+      .toEqual([]);
   });
 });

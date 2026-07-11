@@ -32,8 +32,19 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
     setStorageError(writeResult.ok ? null : writeResult.error);
   }, []);
 
-  const removeFavorite = useCallback(() => {
-    // Removal is completed in User Story 3. The stable API is available now.
+  const removeFavorite = useCallback((movieId: number) => {
+    if (!favoritesRef.current.some((favorite) => favorite.id === movieId)) {
+      return;
+    }
+
+    const nextFavorites = favoritesRef.current.filter(
+      (favorite) => favorite.id !== movieId,
+    );
+    favoritesRef.current = nextFavorites;
+    setFavorites(nextFavorites);
+
+    const writeResult = writeFavorites(nextFavorites);
+    setStorageError(writeResult.ok ? null : writeResult.error);
   }, []);
 
   const favoriteIds = useMemo(
