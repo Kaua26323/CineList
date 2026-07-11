@@ -1,9 +1,33 @@
-import { Heart, Trash2, TriangleAlert } from "lucide-react";
+import { ArrowRight, Heart, Trash2, TriangleAlert } from "lucide-react";
+import { Link } from "react-router";
 
 import { Button } from "../components/Button/Button";
 import { MovieCard } from "../components/MovieCard/MovieCard";
 import { useFavoritesContext } from "../hooks/useFavoritesContext";
 import styles from "./Favorites.module.css";
+
+function EmptyFavoritesState() {
+  return (
+    <section
+      className={styles.empty}
+      aria-labelledby="empty-favorites-title"
+      aria-describedby="empty-favorites-description"
+    >
+      <div className={styles.emptyIcon}>
+        <Heart size={36} aria-hidden="true" />
+      </div>
+      <h2 id="empty-favorites-title">No favorite movies yet</h2>
+      <p id="empty-favorites-description">
+        Open a movie&apos;s details page and choose Favorite to add it to your
+        collection.
+      </p>
+      <Link className={styles.browseLink} to="/">
+        Browse movies
+        <ArrowRight size={18} aria-hidden="true" />
+      </Link>
+    </section>
+  );
+}
 
 export function Favorites() {
   const { favorites, removeFavorite, storageError } = useFavoritesContext();
@@ -53,10 +77,7 @@ export function Favorites() {
           ))}
         </div>
       ) : (
-        <div className={styles.empty}>
-          <Heart size={36} aria-hidden="true" />
-          <h2>No favorite movies yet</h2>
-        </div>
+        <EmptyFavoritesState />
       )}
     </section>
   );

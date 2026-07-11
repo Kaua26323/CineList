@@ -41,6 +41,7 @@ function FavoritesRoutes() {
   return (
     <PageShell>
       <Routes>
+        <Route path="/" element={<h1>Movie catalog destination</h1>} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/movie/:movieId" element={<h1>Movie details destination</h1>} />
       </Routes>
@@ -111,6 +112,44 @@ describe("Favorites route", () => {
     );
   });
 
+  it("explains how to add favorites without rendering an empty grid", () => {
+    favoritesContextMock.mockReturnValue({
+      ...baseContext,
+      favorites: [],
+      favoriteIds: new Set(),
+      isFavorited: () => false,
+    });
+
+    renderFavorites();
+
+    expect(screen.getByRole("heading", { name: "No favorite movies yet" }))
+      .toBeVisible();
+    expect(
+      screen.getByText(/open a movie's details page and choose favorite/i),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Favorite movies")).not.toBeInTheDocument();
+  });
+
+  it("links the empty state back to the movie catalog", () => {
+    favoritesContextMock.mockReturnValue({
+      ...baseContext,
+      favorites: [],
+      favoriteIds: new Set(),
+      isFavorited: () => false,
+    });
+
+    renderFavorites();
+
+    const browseLink = screen.getByRole("link", { name: "Browse movies" });
+    expect(browseLink).toHaveAttribute("href", "/");
+
+    fireEvent.click(browseLink);
+
+    expect(
+      screen.getByRole("heading", { name: "Movie catalog destination" }),
+    ).toBeVisible();
+  });
+
   it("removes the final favorite immediately and shows the empty state", () => {
     let favorites = [favorite];
     favoritesContextMock.mockImplementation(() => ({
@@ -135,5 +174,12 @@ describe("Favorites route", () => {
       .toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "No favorite movies yet" }))
       .toBeVisible();
+    expect(
+      screen.getByText(/open a movie's details page and choose favorite/i),
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: "Browse movies" })).toHaveAttribute(
+      "href",
+      "/",
+    );
   });
 });
