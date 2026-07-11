@@ -1,6 +1,6 @@
 import { Clapperboard } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 import styles from "./PageShell.module.css";
 
@@ -23,14 +23,25 @@ export function PageShell({ children }: PageShellProps) {
           <nav aria-label="Primary navigation">
             <ul className={styles.navigation}>
               <li>
-                <Link className={styles.navLink} to="/">
+                <NavLink
+                  className={({ isActive }) =>
+                    `${styles.navLink} ${isActive ? styles.activeNavLink : ""}`
+                  }
+                  to="/"
+                  end
+                >
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link className={styles.navLink} to="/favorites">
+                <NavLink
+                  className={({ isActive }) =>
+                    `${styles.navLink} ${isActive ? styles.activeNavLink : ""}`
+                  }
+                  to="/favorites"
+                >
                   Favorites
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>

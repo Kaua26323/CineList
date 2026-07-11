@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { PageShell } from "./components/PageShell/PageShell";
 import { FavoritesProvider } from "./contexts/favorites/favoritesProvider";
+import { Favorites } from "./pages/Favorites";
 import { Home } from "./pages/Home";
 import { MovieDetails } from "./pages/MovieDetails";
 import { NotFound } from "./pages/NotFound";
@@ -30,6 +31,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/movie/:movieId" element={<MovieDetails />} />
+              <Route path="/favorites" element={<Favorites />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </PageShell>
