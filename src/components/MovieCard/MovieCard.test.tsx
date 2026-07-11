@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { renderWithProviders } from "../../test/test-utils";
@@ -32,5 +32,15 @@ describe("MovieCard favorite display mode", () => {
     expect(screen.getByText("121 min")).toBeVisible();
     expect(screen.getByText("Science Fiction")).toBeVisible();
     expect(screen.getByText("Adventure")).toBeVisible();
+  });
+
+  it("replaces a poster that fails to load with the accessible fallback", () => {
+    renderWithProviders(<MovieCard movie={favorite} mode="favorite" />);
+
+    fireEvent.error(screen.getByRole("img", { name: "The Answer poster" }));
+
+    expect(screen.queryByRole("img", { name: "The Answer poster" })).not
+      .toBeInTheDocument();
+    expect(screen.getByText("Poster unavailable")).toBeVisible();
   });
 });

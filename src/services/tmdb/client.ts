@@ -72,8 +72,15 @@ export function getTmdbImageUrl(path: string | null): string | null {
   }
 
   const configuredBaseUrl = import.meta.env.VITE_TMDB_IMAGE_BASE_URL?.trim();
-  const baseUrl = configuredBaseUrl || DEFAULT_TMDB_IMAGE_BASE_URL;
-  return `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
+  const baseUrl = (configuredBaseUrl || DEFAULT_TMDB_IMAGE_BASE_URL).replace(
+    /\/+$/,
+    "",
+  );
+  const sizedBaseUrl = /\/(?:w\d+|h\d+|original)$/.test(baseUrl)
+    ? baseUrl
+    : `${baseUrl}/w500`;
+
+  return `${sizedBaseUrl}/${path.replace(/^\/+/, "")}`;
 }
 
 function errorForResponse(response: Response) {

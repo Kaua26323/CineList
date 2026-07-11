@@ -1,4 +1,5 @@
 import { Heart, ImageOff, Star } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 
 import { getTmdbImageUrl } from "../../services/tmdb/client";
@@ -18,6 +19,34 @@ interface FavoriteMovieCardProps {
 
 export type MovieCardProps = CatalogMovieCardProps | FavoriteMovieCardProps;
 
+interface MoviePosterProps {
+  posterUrl: string | null;
+  title: string;
+}
+
+function MoviePoster({ posterUrl, title }: MoviePosterProps) {
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  if (!posterUrl || loadFailed) {
+    return (
+      <div className={styles.posterFallback}>
+        <ImageOff aria-hidden="true" />
+        <span>Poster unavailable</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      className={styles.poster}
+      src={posterUrl}
+      alt={`${title} poster`}
+      loading="lazy"
+      onError={() => setLoadFailed(true)}
+    />
+  );
+}
+
 export function MovieCard(props: MovieCardProps) {
   const { movie } = props;
   const favoriteMovie = props.mode === "favorite" ? props.movie : null;
@@ -32,19 +61,11 @@ export function MovieCard(props: MovieCardProps) {
   return (
     <article className={styles.card}>
       <div className={styles.posterFrame}>
-        {posterUrl ? (
-          <img
-            className={styles.poster}
-            src={posterUrl}
-            alt={`${movie.title} poster`}
-            loading="lazy"
-          />
-        ) : (
-          <div className={styles.posterFallback}>
-            <ImageOff aria-hidden="true" />
-            <span>Poster unavailable</span>
-          </div>
-        )}
+        <MoviePoster
+          key={posterUrl ?? "missing-poster"}
+          posterUrl={posterUrl}
+          title={movie.title}
+        />
         {isFavorited && (
           <span className={styles.favoriteBadge}>
             <Heart size={16} fill="currentColor" aria-hidden="true" />
@@ -58,7 +79,9 @@ export function MovieCard(props: MovieCardProps) {
           <span>{movie.releaseYear ?? "Year unknown"}</span>
           <span className={styles.rating}>
             <Star size={16} fill="currentColor" aria-hidden="true" />
-            {movie.voteAverage === null ? "Not rated" : movie.voteAverage.toFixed(1)}
+            {movie.voteAverage === null
+              ? "Not rated"
+              : movie.voteAverage.toFixed(1)}
           </span>
         </div>
         {favoriteMovie && (

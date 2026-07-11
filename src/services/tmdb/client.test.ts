@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "../../types/errors";
-import { getTmdbConfig, tmdbRequest } from "./client";
+import { getTmdbConfig, getTmdbImageUrl, tmdbRequest } from "./client";
 
 describe("TMDB client", () => {
   beforeEach(() => {
@@ -54,6 +54,40 @@ describe("TMDB client", () => {
     expect(requestedUrl.searchParams.get("api_key")).toBe("test-api-key");
     expect(requestedUrl.searchParams.get("language")).toBe("en-US");
     expect(requestedUrl.searchParams.get("page")).toBe("2");
+  });
+
+  it.each([
+    [
+      "https://image.tmdb.org/t/p",
+      "/answer.jpg",
+      "https://image.tmdb.org/t/p/w500/answer.jpg",
+    ],
+    [
+      "https://image.tmdb.org/t/p/",
+      "///answer.jpg",
+      "https://image.tmdb.org/t/p/w500/answer.jpg",
+    ],
+    [
+      "https://image.tmdb.org/t/p/w780",
+      "/answer.jpg",
+      "https://image.tmdb.org/t/p/w780/answer.jpg",
+    ],
+    [
+      "https://image.tmdb.org/t/p/original/",
+      "/answer.jpg",
+      "https://image.tmdb.org/t/p/original/answer.jpg",
+    ],
+  ])(
+    "builds a sized poster URL from %s",
+    (imageBaseUrl, posterPath, expectedUrl) => {
+      vi.stubEnv("VITE_TMDB_IMAGE_BASE_URL", imageBaseUrl);
+
+      expect(getTmdbImageUrl(posterPath)).toBe(expectedUrl);
+    },
+  );
+
+  it("returns null when a movie has no poster path", () => {
+    expect(getTmdbImageUrl(null)).toBeNull();
   });
 
   it("maps non-success responses to an API AppError", async () => {
