@@ -1,0 +1,60 @@
+.heading {
+  display: grid;
+  margin-bottom: var(--space-6);
+  gap: var(--space-3);
+}
+
+.heading h1 {
+  margin-bottom: 0;
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.intro {
+  max-width: 38rem;
+  margin-bottom: 0;
+  color: var(--color-text-secondary);
+}
+
+.empty {
+  display: grid;
+  min-height: 18rem;
+  padding: var(--space-6);
+  place-content: center;
+  justify-items: center;
+  border: 0.0625rem dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.empty svg {
+  margin-bottom: var(--space-3);
+  color: var(--color-primary);
+}
+
+.empty h2 {
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+}
+
+.empty p {
+  margin-bottom: 0;
+}
+
+@media (min-width: 48rem) {
+  .heading {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr);
+    align-items: end;
+  }
+}
