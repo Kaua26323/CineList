@@ -2,16 +2,32 @@ import { Heart, ImageOff, Star } from "lucide-react";
 import { Link } from "react-router";
 
 import { getTmdbImageUrl } from "../../services/tmdb/client";
-import type { MovieSummary } from "../../types/movies";
+import type { FavoriteMovie, MovieSummary } from "../../types/movies";
 import styles from "./MovieCard.module.css";
 
-export interface MovieCardProps {
+interface CatalogMovieCardProps {
   movie: MovieSummary;
+  mode?: "catalog";
   isFavorited?: boolean;
 }
 
-export function MovieCard({ movie, isFavorited = false }: MovieCardProps) {
+interface FavoriteMovieCardProps {
+  movie: FavoriteMovie;
+  mode: "favorite";
+}
+
+export type MovieCardProps = CatalogMovieCardProps | FavoriteMovieCardProps;
+
+export function MovieCard(props: MovieCardProps) {
+  const { movie } = props;
+  const favoriteMovie = props.mode === "favorite" ? props.movie : null;
+  const isFavorited =
+    favoriteMovie !== null ||
+    (props.mode !== "favorite" && props.isFavorited === true);
   const posterUrl = getTmdbImageUrl(movie.posterPath);
+  const detailsLabel = favoriteMovie
+    ? `Details for ${movie.title}`
+    : `View details for ${movie.title}`;
 
   return (
     <article className={styles.card}>
@@ -45,12 +61,30 @@ export function MovieCard({ movie, isFavorited = false }: MovieCardProps) {
             {movie.voteAverage === null ? "Not rated" : movie.voteAverage.toFixed(1)}
           </span>
         </div>
+        {favoriteMovie && (
+          <div className={styles.favoriteMetadata}>
+            <p>
+              {favoriteMovie.runtimeMinutes === null
+                ? "Runtime unknown"
+                : `${favoriteMovie.runtimeMinutes} min`}
+            </p>
+            {favoriteMovie.genres.length > 0 ? (
+              <ul className={styles.genres} aria-label="Genres">
+                {favoriteMovie.genres.map((genre) => (
+                  <li key={genre}>{genre}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>Genres unavailable</p>
+            )}
+          </div>
+        )}
         <Link
           className={styles.detailsLink}
           to={`/movie/${movie.id}`}
-          aria-label={`View details for ${movie.title}`}
+          aria-label={detailsLabel}
         >
-          View details
+          {favoriteMovie ? "Details" : "View details"}
         </Link>
       </div>
     </article>
