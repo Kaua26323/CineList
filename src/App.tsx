@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { PageShell } from "./components/PageShell/PageShell";
 import { FavoritesProvider } from "./contexts/favorites/favoritesProvider";
+import { Home } from "./pages/Home";
+import { MovieDetails } from "./pages/MovieDetails";
 import { NotFound } from "./pages/NotFound";
 
 function createAppQueryClient() {
@@ -17,15 +19,6 @@ function createAppQueryClient() {
   });
 }
 
-function CatalogPlaceholder() {
-  return (
-    <section aria-labelledby="catalog-title">
-      <h1 id="catalog-title">Discover popular movies</h1>
-      <p>The CineList catalog is being prepared.</p>
-    </section>
-  );
-}
-
 export default function App() {
   const [queryClient] = useState(createAppQueryClient);
 
@@ -35,7 +28,8 @@ export default function App() {
         <FavoritesProvider>
           <PageShell>
             <Routes>
-              <Route path="/" element={<CatalogPlaceholder />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/movie/:movieId" element={<MovieDetails />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </PageShell>
