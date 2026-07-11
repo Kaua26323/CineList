@@ -36,11 +36,12 @@ const movie: MovieDetailsModel = {
 };
 
 const addFavorite = vi.fn();
+const removeFavorite = vi.fn();
 const favoritesValue: FavoritesContextValue = {
   favorites: [],
   favoriteIds: new Set<number>(),
   addFavorite,
-  removeFavorite: vi.fn(),
+  removeFavorite,
   isFavorited: () => false,
   storageError: null,
 };
@@ -60,6 +61,7 @@ function renderDetails(path = "/movie/42") {
 describe("MovieDetails route", () => {
   beforeEach(() => {
     addFavorite.mockReset();
+    removeFavorite.mockReset();
     movieDetailsMock.mockReset();
     favoritesContextMock.mockReset();
     favoritesContextMock.mockReturnValue(favoritesValue);
@@ -194,5 +196,41 @@ describe("MovieDetails route", () => {
     );
     expect(screen.getByRole("button", { name: "Remove from Favorites" }))
       .toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("removes a favorited movie and changes the action back to Favorite", () => {
+    let favorited = true;
+    favoritesContextMock.mockImplementation(() => ({
+      ...favoritesValue,
+      favoriteIds: favorited ? new Set([42]) : new Set<number>(),
+      isFavorited: () => favorited,
+      removeFavorite: (movieId) => {
+        favorited = false;
+        removeFavorite(movieId);
+      },
+    }));
+    movieDetailsMock.mockReturnValue({
+      data: movie,
+      error: null,
+      isPending: false,
+      isError: false,
+      refetch: vi.fn(),
+    } as unknown as ReturnType<typeof useMovieDetails>);
+
+    const view = renderDetails();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Remove from Favorites" }),
+    );
+    view.rerender(
+      <Routes>
+        <Route path="/movie/:movieId" element={<MovieDetails />} />
+      </Routes>,
+    );
+
+    expect(removeFavorite).toHaveBeenCalledWith(42);
+    expect(screen.getByRole("button", { name: "Favorite" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
   });
 });

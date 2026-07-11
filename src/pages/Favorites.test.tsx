@@ -24,31 +24,40 @@ const favorite: FavoriteMovie = {
   genres: ["Science Fiction", "Adventure"],
 };
 
+const removeFavorite = vi.fn();
+
 const baseContext: FavoritesContextValue = {
   favorites: [favorite],
   favoriteIds: new Set([favorite.id]),
   addFavorite: vi.fn(),
-  removeFavorite: vi.fn(),
+  removeFavorite,
   isFavorited: (movieId) => movieId === favorite.id,
   storageError: null,
 };
 
 const favoritesContextMock = vi.mocked(useFavoritesContext);
 
-function renderFavorites() {
-  return renderWithProviders(
+function FavoritesRoutes() {
+  return (
     <PageShell>
       <Routes>
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/movie/:movieId" element={<h1>Movie details destination</h1>} />
       </Routes>
-    </PageShell>,
+    </PageShell>
+  );
+}
+
+function renderFavorites() {
+  return renderWithProviders(
+    <FavoritesRoutes />,
     { initialEntries: ["/favorites"] },
   );
 }
 
 describe("Favorites route", () => {
   beforeEach(() => {
+    removeFavorite.mockReset();
     favoritesContextMock.mockReset();
     favoritesContextMock.mockReturnValue(baseContext);
   });
@@ -100,5 +109,31 @@ describe("Favorites route", () => {
     expect(screen.getByRole("link", { name: "Home" })).not.toHaveAttribute(
       "aria-current",
     );
+  });
+
+  it("removes the final favorite immediately and shows the empty state", () => {
+    let favorites = [favorite];
+    favoritesContextMock.mockImplementation(() => ({
+      ...baseContext,
+      favorites,
+      favoriteIds: new Set(favorites.map((movie) => movie.id)),
+      isFavorited: (movieId) => favorites.some((movie) => movie.id === movieId),
+      removeFavorite: (movieId) => {
+        favorites = favorites.filter((movie) => movie.id !== movieId);
+        removeFavorite(movieId);
+      },
+    }));
+
+    const view = renderFavorites();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Remove The Answer from favorites" }),
+    );
+    view.rerender(<FavoritesRoutes />);
+
+    expect(removeFavorite).toHaveBeenCalledWith(42);
+    expect(screen.queryByRole("heading", { name: "The Answer" })).not
+      .toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "No favorite movies yet" }))
+      .toBeVisible();
   });
 });
