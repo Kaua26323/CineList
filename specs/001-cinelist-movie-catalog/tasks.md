@@ -108,16 +108,16 @@
 
 ### Tests for User Story 3 (REQUIRED)
 
-- [ ] T043 [P] [US3] Write failing FavoritesProvider tests for removeFavorite immediate state, persisted removal, missing ID no-op, and removing the last favorite in src/contexts/favorites/favoritesProvider.test.tsx
-- [ ] T044 [P] [US3] Write failing MovieDetails remove interaction test for favorited movie state changing back to Favorite in src/pages/MovieDetails.test.tsx
-- [ ] T045 [P] [US3] Write failing Favorites route remove interaction test for immediate item removal and last-favorite transition to empty state in src/pages/Favorites.test.tsx
+- [X] T043 [P] [US3] Write failing FavoritesProvider tests for removeFavorite immediate state, persisted removal, missing ID no-op, and removing the last favorite in src/contexts/favorites/favoritesProvider.test.tsx
+- [X] T044 [P] [US3] Write failing MovieDetails remove interaction test for favorited movie state changing back to Favorite in src/pages/MovieDetails.test.tsx
+- [X] T045 [P] [US3] Write failing Favorites route remove interaction test for immediate item removal and last-favorite transition to empty state in src/pages/Favorites.test.tsx
 
 ### Implementation for User Story 3
 
-- [ ] T046 [US3] Complete removeFavorite behavior with immediate state update, localStorage persistence, and safe no-op for unknown IDs in src/contexts/favorites/favoritesProvider.tsx
-- [ ] T047 [US3] Wire MovieDetails favorited-state remove action to `removeFavorite(movieId)` in src/pages/MovieDetails.tsx
-- [ ] T048 [US3] Add Remove button with lucide-react icon, accessible name including movie title, and immediate removal handling in src/pages/Favorites.tsx
-- [ ] T049 [US3] Add focused remove button styles and non-overlapping favorite item controls in src/pages/Favorites.module.css
+- [X] T046 [US3] Complete removeFavorite behavior with immediate state update, localStorage persistence, and safe no-op for unknown IDs in src/contexts/favorites/favoritesProvider.tsx
+- [X] T047 [US3] Wire MovieDetails favorited-state remove action to `removeFavorite(movieId)` in src/pages/MovieDetails.tsx
+- [X] T048 [US3] Add Remove button with lucide-react icon, accessible name including movie title, and immediate removal handling in src/pages/Favorites.tsx
+- [X] T049 [US3] Add focused remove button styles and non-overlapping favorite item controls in src/pages/Favorites.module.css
 
 **Checkpoint**: User Stories 1, 2, and 3 are independently functional.
 
