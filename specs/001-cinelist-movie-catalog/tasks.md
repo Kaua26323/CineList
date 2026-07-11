@@ -50,29 +50,29 @@
 
 ### Tests for User Story 1 (REQUIRED)
 
-- [ ] T017 [P] [US1] Write failing TMDB client tests for config, success, non-2xx, network failure, and user-friendly AppError mapping in src/services/tmdb/client.test.ts
-- [ ] T018 [P] [US1] Write failing TMDB movie service and normalizer tests for popular movies, movie details, empty results, invalid IDs, not-found responses, and missing optional fields in src/services/tmdb/movies.test.ts
-- [ ] T019 [P] [US1] Write failing favorites storage tests for empty read, malformed JSON recovery, duplicate validation, and write failure result in src/services/favoritesStorage.test.ts
-- [ ] T020 [P] [US1] Write failing FavoritesProvider tests for initialization, addFavorite immediate state, duplicate refresh, storage warning, and isFavorited in src/contexts/favorites/favoritesProvider.test.tsx
-- [ ] T021 [P] [US1] Write failing Home route tests for loading, success grid, empty popular results, error with retry, favorite indicators, and movie navigation in src/pages/Home.test.tsx
-- [ ] T022 [P] [US1] Write failing MovieDetails route tests for invalid param, loading, success fields, missing optional fields, error recovery, and Favorite toggle interaction in src/pages/MovieDetails.test.tsx
+- [X] T017 [P] [US1] Write failing TMDB client tests for config, success, non-2xx, network failure, and user-friendly AppError mapping in src/services/tmdb/client.test.ts
+- [X] T018 [P] [US1] Write failing TMDB movie service and normalizer tests for popular movies, movie details, empty results, invalid IDs, not-found responses, and missing optional fields in src/services/tmdb/movies.test.ts
+- [X] T019 [P] [US1] Write failing favorites storage tests for empty read, malformed JSON recovery, duplicate validation, and write failure result in src/services/favoritesStorage.test.ts
+- [X] T020 [P] [US1] Write failing FavoritesProvider tests for initialization, addFavorite immediate state, duplicate refresh, storage warning, and isFavorited in src/contexts/favorites/favoritesProvider.test.tsx
+- [X] T021 [P] [US1] Write failing Home route tests for loading, success grid, empty popular results, error with retry, favorite indicators, and movie navigation in src/pages/Home.test.tsx
+- [X] T022 [P] [US1] Write failing MovieDetails route tests for invalid param, loading, success fields, missing optional fields, error recovery, and Favorite toggle interaction in src/pages/MovieDetails.test.tsx
 
 ### Implementation for User Story 1
 
-- [ ] T023 [P] [US1] Implement TMDB request client with environment config, URL building, fetch execution, and AppError mapping in src/services/tmdb/client.ts
-- [ ] T024 [P] [US1] Implement TMDB response normalizers and details-to-favorite conversion in src/services/tmdb/normalizers.ts
-- [ ] T025 [US1] Implement `getPopularMovies` and `getMovieDetails` service functions in src/services/tmdb/movies.ts
-- [ ] T026 [P] [US1] Implement favoritesStorage read/write/validate helpers with storage error results in src/services/favoritesStorage.ts
-- [ ] T027 [P] [US1] Create FavoritesContext object and value types in src/contexts/favorites/favoritesContext.tsx
-- [ ] T028 [US1] Implement FavoritesProvider addFavorite, removeFavorite placeholder, duplicate refresh, storage persistence, and storage warning behavior in src/contexts/favorites/favoritesProvider.tsx
-- [ ] T029 [P] [US1] Implement `useFavoritesContext` guard hook in src/hooks/useFavoritesContext.ts
-- [ ] T030 [P] [US1] Implement TanStack Query hooks for popular movies and details in src/hooks/usePopularMovies.ts and src/hooks/useMovieDetails.ts
-- [ ] T031 [P] [US1] Create MovieCard component with poster fallback, title, metadata, favorite indicator, accessible details link, and CSS Module styles in src/components/MovieCard/MovieCard.tsx and src/components/MovieCard/MovieCard.module.css
-- [ ] T032 [P] [US1] Create MovieGrid component with responsive CSS Grid constraints in src/components/MovieGrid/MovieGrid.tsx and src/components/MovieGrid/MovieGrid.module.css
-- [ ] T033 [P] [US1] Create favorite toggle Button composition using lucide-react icons and `aria-pressed` in src/components/Button/FavoriteToggle.tsx
-- [ ] T034 [US1] Implement Home route loading/success/empty/error states and popular movie grid in src/pages/Home.tsx and src/pages/Home.module.css
-- [ ] T035 [US1] Implement MovieDetails route param validation, loading/success/error/not-found states, details UI, and Favorite action in src/pages/MovieDetails.tsx and src/pages/MovieDetails.module.css
-- [ ] T036 [US1] Register `/`, `/movie/:movieId`, and fallback routes with provider composition in src/App.tsx
+- [X] T023 [P] [US1] Implement TMDB request client with environment config, URL building, fetch execution, and AppError mapping in src/services/tmdb/client.ts
+- [X] T024 [P] [US1] Implement TMDB response normalizers and details-to-favorite conversion in src/services/tmdb/normalizers.ts
+- [X] T025 [US1] Implement `getPopularMovies` and `getMovieDetails` service functions in src/services/tmdb/movies.ts
+- [X] T026 [P] [US1] Implement favoritesStorage read/write/validate helpers with storage error results in src/services/favoritesStorage.ts
+- [X] T027 [P] [US1] Create FavoritesContext object and value types in src/contexts/favorites/favoritesContext.tsx
+- [X] T028 [US1] Implement FavoritesProvider addFavorite, removeFavorite placeholder, duplicate refresh, storage persistence, and storage warning behavior in src/contexts/favorites/favoritesProvider.tsx
+- [X] T029 [P] [US1] Implement `useFavoritesContext` guard hook in src/hooks/useFavoritesContext.ts
+- [X] T030 [P] [US1] Implement TanStack Query hooks for popular movies and details in src/hooks/usePopularMovies.ts and src/hooks/useMovieDetails.ts
+- [X] T031 [P] [US1] Create MovieCard component with poster fallback, title, metadata, favorite indicator, accessible details link, and CSS Module styles in src/components/MovieCard/MovieCard.tsx and src/components/MovieCard/MovieCard.module.css
+- [X] T032 [P] [US1] Create MovieGrid component with responsive CSS Grid constraints in src/components/MovieGrid/MovieGrid.tsx and src/components/MovieGrid/MovieGrid.module.css
+- [X] T033 [P] [US1] Create favorite toggle Button composition using lucide-react icons and `aria-pressed` in src/components/Button/FavoriteToggle.tsx
+- [X] T034 [US1] Implement Home route loading/success/empty/error states and popular movie grid in src/pages/Home.tsx and src/pages/Home.module.css
+- [X] T035 [US1] Implement MovieDetails route param validation, loading/success/error/not-found states, details UI, and Favorite action in src/pages/MovieDetails.tsx and src/pages/MovieDetails.module.css
+- [X] T036 [US1] Register `/`, `/movie/:movieId`, and fallback routes with provider composition in src/App.tsx
 
 **Checkpoint**: User Story 1 is fully functional and testable as the MVP.
 
