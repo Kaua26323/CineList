@@ -86,15 +86,15 @@
 
 ### Tests for User Story 2 (REQUIRED)
 
-- [ ] T037 [P] [US2] Write failing Favorites route tests for populated favorites, required favorite summary fields, storage warning display, and Details navigation in src/pages/Favorites.test.tsx
-- [ ] T038 [P] [US2] Write failing MovieCard or favorites item accessibility tests for Details link role/name and visible favorite metadata in src/components/MovieCard/MovieCard.test.tsx
+- [X] T037 [P] [US2] Write failing Favorites route tests for populated favorites, required favorite summary fields, storage warning display, and Details navigation in src/pages/Favorites.test.tsx
+- [X] T038 [P] [US2] Write failing MovieCard or favorites item accessibility tests for Details link role/name and visible favorite metadata in src/components/MovieCard/MovieCard.test.tsx
 
 ### Implementation for User Story 2
 
-- [ ] T039 [P] [US2] Extend MovieCard props to support FavoriteMovie display mode and Details action labels in src/components/MovieCard/MovieCard.tsx
-- [ ] T040 [US2] Implement Favorites route populated success state, storage warning state, Details links, and responsive favorite grid in src/pages/Favorites.tsx and src/pages/Favorites.module.css
-- [ ] T041 [US2] Register `/favorites` route and header navigation active state in src/App.tsx and src/components/PageShell/PageShell.tsx
-- [ ] T042 [US2] Verify favorites page uses only `useFavoritesContext` and does not call TMDB services in src/pages/Favorites.tsx
+- [X] T039 [P] [US2] Extend MovieCard props to support FavoriteMovie display mode and Details action labels in src/components/MovieCard/MovieCard.tsx
+- [X] T040 [US2] Implement Favorites route populated success state, storage warning state, Details links, and responsive favorite grid in src/pages/Favorites.tsx and src/pages/Favorites.module.css
+- [X] T041 [US2] Register `/favorites` route and header navigation active state in src/App.tsx and src/components/PageShell/PageShell.tsx
+- [X] T042 [US2] Verify favorites page uses only `useFavoritesContext` and does not call TMDB services in src/pages/Favorites.tsx
 
 **Checkpoint**: User Stories 1 and 2 both work independently.
 
