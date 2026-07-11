@@ -131,13 +131,13 @@
 
 ### Tests for User Story 4 (REQUIRED)
 
-- [ ] T050 [P] [US4] Write failing Favorites route empty-state tests for no favorites message, add-from-details guidance, and Browse movies navigation in src/pages/Favorites.test.tsx
+- [X] T050 [P] [US4] Write failing Favorites route empty-state tests for no favorites message, add-from-details guidance, and Browse movies navigation in src/pages/Favorites.test.tsx
 
 ### Implementation for User Story 4
 
-- [ ] T051 [US4] Implement empty favorites state copy, Browse movies link, and no empty grid rendering in src/pages/Favorites.tsx
-- [ ] T052 [US4] Add accessible and responsive empty-state layout styles in src/pages/Favorites.module.css
-- [ ] T053 [US4] Ensure removing the last favorite routes through the same empty state component in src/pages/Favorites.tsx
+- [X] T051 [US4] Implement empty favorites state copy, Browse movies link, and no empty grid rendering in src/pages/Favorites.tsx
+- [X] T052 [US4] Add accessible and responsive empty-state layout styles in src/pages/Favorites.module.css
+- [X] T053 [US4] Ensure removing the last favorite routes through the same empty state component in src/pages/Favorites.tsx
 
 **Checkpoint**: Empty favorites behavior is independently testable.
 
