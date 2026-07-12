@@ -9,6 +9,7 @@ import { renderWithProviders } from "../test/test-utils";
 import { createStorageError } from "../types/errors";
 import type { FavoriteMovie } from "../types/movies";
 import { Favorites } from "./Favorites";
+import styles from "./Favorites.module.css";
 
 vi.mock("../hooks/useFavoritesContext", () => ({
   useFavoritesContext: vi.fn(),
@@ -67,6 +68,7 @@ describe("Favorites route", () => {
     renderFavorites();
 
     expect(screen.getByRole("heading", { name: "Your favorites" })).toBeVisible();
+    expect(screen.getByLabelText("Favorite movies")).toHaveClass(styles.grid);
     expect(screen.getByRole("heading", { name: "The Answer" })).toBeVisible();
     expect(screen.getByRole("img", { name: "The Answer poster" })).toBeVisible();
     expect(screen.getByText("2025")).toBeVisible();
@@ -74,6 +76,16 @@ describe("Favorites route", () => {
     expect(screen.getByText("121 min")).toBeVisible();
     expect(screen.getByText("Science Fiction")).toBeVisible();
     expect(screen.getByText("Adventure")).toBeVisible();
+  });
+
+  it("keeps favorite item controls in a non-overlapping action row", () => {
+    renderFavorites();
+
+    expect(
+      screen
+        .getByRole("button", { name: "Remove The Answer from favorites" })
+        .closest(`.${styles.itemActions}`),
+    ).not.toBeNull();
   });
 
   it("shows a non-blocking storage warning while preserving favorites", () => {
@@ -124,6 +136,8 @@ describe("Favorites route", () => {
 
     expect(screen.getByRole("heading", { name: "No favorite movies yet" }))
       .toBeVisible();
+    expect(screen.getByRole("heading", { name: "No favorite movies yet" })
+      .closest(`.${styles.empty}`)).not.toBeNull();
     expect(
       screen.getByText(/open a movie's details page and choose favorite/i),
     ).toBeVisible();
