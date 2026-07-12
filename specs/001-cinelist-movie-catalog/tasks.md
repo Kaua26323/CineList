@@ -151,14 +151,14 @@
 
 ### Tests for User Story 5 (REQUIRED)
 
-- [ ] T054 [P] [US5] Write failing favoritesStorage tests for parsing valid storage event payloads, ignoring unrelated keys, and recovering from malformed event payloads in src/services/favoritesStorage.test.ts
-- [ ] T055 [P] [US5] Write failing FavoritesProvider cross-tab synchronization tests for add, remove, malformed payload, and unavailable storage event behavior in src/contexts/favorites/favoritesProvider.test.tsx
+- [X] T054 [P] [US5] Write failing favoritesStorage tests for parsing valid storage event payloads, ignoring unrelated keys, and recovering from malformed event payloads in src/services/favoritesStorage.test.ts
+- [X] T055 [P] [US5] Write failing FavoritesProvider cross-tab synchronization tests for add, remove, malformed payload, and unavailable storage event behavior in src/contexts/favorites/favoritesProvider.test.tsx
 
 ### Implementation for User Story 5
 
-- [ ] T056 [US5] Implement favoritesStorage storage-event parsing helpers for the configured favorites key in src/services/favoritesStorage.ts
-- [ ] T057 [US5] Add storage event subscription, cleanup, and validated external state replacement in src/contexts/favorites/favoritesProvider.tsx
-- [ ] T058 [US5] Surface non-blocking storage synchronization warnings through PageShell or affected pages in src/components/PageShell/PageShell.tsx
+- [X] T056 [US5] Implement favoritesStorage storage-event parsing helpers for the configured favorites key in src/services/favoritesStorage.ts
+- [X] T057 [US5] Add storage event subscription, cleanup, and validated external state replacement in src/contexts/favorites/favoritesProvider.tsx
+- [X] T058 [US5] Surface non-blocking storage synchronization warnings through PageShell or affected pages in src/components/PageShell/PageShell.tsx
 
 **Checkpoint**: Cross-tab synchronization behavior is test-covered and implemented.
 
