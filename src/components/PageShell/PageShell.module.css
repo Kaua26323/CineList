@@ -90,6 +90,28 @@
   padding-block: var(--space-7);
 }
 
+.syncWarning {
+  display: flex;
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+  align-items: flex-start;
+  gap: var(--space-3);
+  border: 0.0625rem solid rgb(232 201 122 / 35%);
+  border-radius: var(--radius-md);
+  background: rgb(232 201 122 / 10%);
+  color: var(--color-text);
+}
+
+.syncWarning svg {
+  flex: 0 0 auto;
+  color: var(--color-primary);
+}
+
+.syncWarning p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+}
+
 @media (max-width: 30rem) {
   .headerContent {
     min-height: 4rem;
@@ -107,5 +129,9 @@
 
   .main {
     padding-block: var(--space-6);
+  }
+
+  .syncWarning {
+    padding: var(--space-3);
   }
 }

@@ -1,14 +1,16 @@
-import { Clapperboard } from "lucide-react";
+import { Clapperboard, TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link, NavLink } from "react-router";
 
+import type { AppError } from "../../types/errors";
 import styles from "./PageShell.module.css";
 
 export interface PageShellProps {
   children: ReactNode;
+  storageWarning?: AppError | null;
 }
 
-export function PageShell({ children }: PageShellProps) {
+export function PageShell({ children, storageWarning = null }: PageShellProps) {
   return (
     <div className={styles.app}>
       <a className={styles.skipLink} href="#main-content">
@@ -48,6 +50,15 @@ export function PageShell({ children }: PageShellProps) {
         </div>
       </header>
       <main className={styles.main} id="main-content" tabIndex={-1}>
+        {storageWarning && (
+          <div className={styles.syncWarning} role="alert">
+            <TriangleAlert size={22} aria-hidden="true" />
+            <div>
+              <strong>Favorites sync warning</strong>
+              <p>{storageWarning.message}</p>
+            </div>
+          </div>
+        )}
         {children}
       </main>
     </div>

@@ -11,6 +11,11 @@ export type StorageWriteResult =
   | { ok: true }
   | { ok: false; error: AppError };
 
+export type FavoritesStorageEventParseResult =
+  | { status: "ignored"; favorites: null; error: null }
+  | { status: "synced"; favorites: FavoriteMovie[]; error: null }
+  | { status: "failed"; favorites: null; error: AppError };
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -119,6 +124,51 @@ export function readFavoritesResult(): StorageReadResult {
 
 export function readFavorites(): FavoriteMovie[] {
   return readFavoritesResult().favorites;
+}
+
+export function parseFavoritesStorageEvent(
+  event: Pick<StorageEvent, "key" | "newValue">,
+): FavoritesStorageEventParseResult {
+  if (event.key === null && event.newValue === null) {
+    return { status: "synced", favorites: [], error: null };
+  }
+
+  if (event.key !== FAVORITES_STORAGE_KEY) {
+    return { status: "ignored", favorites: null, error: null };
+  }
+
+  if (event.newValue === null) {
+    return { status: "synced", favorites: [], error: null };
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(event.newValue);
+    if (!Array.isArray(parsed)) {
+      return {
+        status: "failed",
+        favorites: null,
+        error: createStorageError(
+          "Favorites changed in another tab, but the saved data couldn't be read. This tab kept its last working list.",
+          { code: "sync-invalid-data" },
+        ),
+      };
+    }
+
+    return {
+      status: "synced",
+      favorites: validateFavorites(parsed),
+      error: null,
+    };
+  } catch (error) {
+    return {
+      status: "failed",
+      favorites: null,
+      error: createStorageError(
+        "Favorites changed in another tab, but the saved data couldn't be read. This tab kept its last working list.",
+        { code: "sync-read-failed", cause: error },
+      ),
+    };
+  }
 }
 
 export function writeFavorites(favorites: FavoriteMovie[]): StorageWriteResult {

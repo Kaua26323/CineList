@@ -31,6 +31,9 @@ function EmptyFavoritesState() {
 
 export function Favorites() {
   const { favorites, removeFavorite, storageError } = useFavoritesContext();
+  const pageStorageError = storageError?.code?.startsWith("sync-")
+    ? null
+    : storageError;
 
   return (
     <section aria-labelledby="favorites-title">
@@ -45,12 +48,12 @@ export function Favorites() {
         </p>
       </div>
 
-      {storageError && (
+      {pageStorageError && (
         <div className={styles.warning} role="alert">
           <TriangleAlert size={22} aria-hidden="true" />
           <div>
             <strong>Favorites storage warning</strong>
-            <p>{storageError.message}</p>
+            <p>{pageStorageError.message}</p>
           </div>
         </div>
       )}

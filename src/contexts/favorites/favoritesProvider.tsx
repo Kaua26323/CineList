@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useCallback,
   useMemo,
   useRef,
@@ -7,10 +8,12 @@ import {
 } from "react";
 
 import {
+  parseFavoritesStorageEvent,
   readFavoritesResult,
   validateFavorites,
   writeFavorites,
 } from "../../services/favoritesStorage";
+import { createStorageError } from "../../types/errors";
 import type { FavoriteMovie } from "../../types/movies";
 import { FavoritesContext, type FavoritesContextValue } from "./favoritesContext";
 
@@ -19,6 +22,45 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
   const [favorites, setFavorites] = useState(initialState.favorites);
   const favoritesRef = useRef(initialState.favorites);
   const [storageError, setStorageError] = useState(initialState.error);
+
+  useEffect(() => {
+    const handleStorageEvent = (event: StorageEvent) => {
+      const result = parseFavoritesStorageEvent(event);
+
+      if (result.status === "ignored") {
+        return;
+      }
+
+      if (result.status === "failed") {
+        setStorageError(result.error);
+        return;
+      }
+
+      favoritesRef.current = result.favorites;
+      setFavorites(result.favorites);
+      setStorageError(null);
+    };
+
+    try {
+      window.addEventListener("storage", handleStorageEvent);
+    } catch (error) {
+      const warningTimer = window.setTimeout(
+        () =>
+          setStorageError(
+            createStorageError(
+              "Favorite changes from other tabs may not appear automatically in this browser.",
+              { code: "sync-unavailable", cause: error },
+            ),
+          ),
+        0,
+      );
+      return () => window.clearTimeout(warningTimer);
+    }
+
+    return () => {
+      window.removeEventListener("storage", handleStorageEvent);
+    };
+  }, []);
 
   const addFavorite = useCallback((movie: FavoriteMovie) => {
     const nextFavorites = validateFavorites([

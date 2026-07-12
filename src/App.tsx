@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { PageShell } from "./components/PageShell/PageShell";
 import { FavoritesProvider } from "./contexts/favorites/favoritesProvider";
+import { useFavoritesContext } from "./hooks/useFavoritesContext";
 import { Favorites } from "./pages/Favorites";
 import { Home } from "./pages/Home";
 import { MovieDetails } from "./pages/MovieDetails";
@@ -20,6 +21,24 @@ function createAppQueryClient() {
   });
 }
 
+function AppShell() {
+  const { storageError } = useFavoritesContext();
+  const syncWarning = storageError?.code?.startsWith("sync-")
+    ? storageError
+    : null;
+
+  return (
+    <PageShell storageWarning={syncWarning}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:movieId" element={<MovieDetails />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </PageShell>
+  );
+}
+
 export default function App() {
   const [queryClient] = useState(createAppQueryClient);
 
@@ -27,14 +46,7 @@ export default function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <FavoritesProvider>
-          <PageShell>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/movie/:movieId" element={<MovieDetails />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </PageShell>
+          <AppShell />
         </FavoritesProvider>
       </QueryClientProvider>
     </BrowserRouter>

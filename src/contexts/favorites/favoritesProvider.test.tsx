@@ -164,4 +164,82 @@ describe("FavoritesProvider", () => {
     expect(JSON.parse(window.localStorage.getItem(FAVORITES_STORAGE_KEY) ?? "[]"))
       .toEqual([]);
   });
+
+  it("syncs an added favorite from a storage event in another tab", () => {
+    renderHarness();
+
+    fireEvent(
+      window,
+      new StorageEvent("storage", {
+        key: FAVORITES_STORAGE_KEY,
+        newValue: JSON.stringify([originalFavorite]),
+      }),
+    );
+
+    expect(screen.getByLabelText("favorite count")).toHaveTextContent("1");
+    expect(screen.getByLabelText("favorite titles")).toHaveTextContent(
+      "The Answer",
+    );
+    expect(screen.getByLabelText("is favorite")).toHaveTextContent("true");
+  });
+
+  it("syncs removed favorites from a storage event in another tab", () => {
+    window.localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify([originalFavorite]),
+    );
+    renderHarness();
+
+    fireEvent(
+      window,
+      new StorageEvent("storage", {
+        key: FAVORITES_STORAGE_KEY,
+        newValue: JSON.stringify([]),
+      }),
+    );
+
+    expect(screen.getByLabelText("favorite count")).toHaveTextContent("0");
+    expect(screen.getByLabelText("is favorite")).toHaveTextContent("false");
+  });
+
+  it("keeps current favorites and exposes a warning for malformed storage events", () => {
+    window.localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify([originalFavorite]),
+    );
+    renderHarness();
+
+    fireEvent(
+      window,
+      new StorageEvent("storage", {
+        key: FAVORITES_STORAGE_KEY,
+        newValue: "{not-json",
+      }),
+    );
+
+    expect(screen.getByLabelText("favorite count")).toHaveTextContent("1");
+    expect(screen.getByLabelText("favorite titles")).toHaveTextContent(
+      "The Answer",
+    );
+    expect(screen.getByRole("alert")).toHaveTextContent(/another tab/i);
+  });
+
+  it("surfaces a warning when storage event subscription is unavailable", async () => {
+    const originalAddEventListener = window.addEventListener.bind(window);
+    vi.spyOn(window, "addEventListener").mockImplementation(
+      (type, listener, options) => {
+        if (type === "storage") {
+          throw new Error("Storage events are unavailable");
+        }
+
+        return originalAddEventListener(type, listener, options);
+      },
+    );
+
+    renderHarness();
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      /may not appear automatically/i,
+    );
+  });
 });
