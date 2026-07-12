@@ -168,14 +168,14 @@
 
 **Purpose**: Finish constitution checks, accessibility, responsiveness, and verification across all user stories.
 
-- [ ] T059 [P] Add route-level accessibility regression tests for header navigation, retry actions, favorite buttons, remove buttons, and not-found recovery in src/App.test.tsx
-- [ ] T060 [P] Add focused responsive CSS checks or class-level tests for MovieGrid and Favorites layouts in src/components/MovieGrid/MovieGrid.test.tsx and src/pages/Favorites.test.tsx
-- [ ] T061 Audit and remove any direct TMDB `fetch` usage outside src/services/tmdb and query hooks in src/pages/Home.tsx, src/pages/MovieDetails.tsx, and src/components/MovieCard/MovieCard.tsx
-- [ ] T062 Audit scope boundaries to ensure no search, pagination, accounts, backend sync, sharing, custom ratings, or theme modes were added in src/App.tsx and src/pages/Home.tsx
-- [ ] T063 Run and fix lint issues with `npm run lint` across src/
-- [ ] T064 Run and fix type/build issues with `npm run build` across src/
-- [ ] T065 Run and fix automated tests with `npm run test:run` across src/
-- [ ] T066 Execute quickstart manual validation scenarios and record any unavailable verification notes in specs/001-cinelist-movie-catalog/quickstart.md
+- [X] T059 [P] Add route-level accessibility regression tests for header navigation, retry actions, favorite buttons, remove buttons, and not-found recovery in src/App.test.tsx
+- [X] T060 [P] Add focused responsive CSS checks or class-level tests for MovieGrid and Favorites layouts in src/components/MovieGrid/MovieGrid.test.tsx and src/pages/Favorites.test.tsx
+- [X] T061 Audit and remove any direct TMDB `fetch` usage outside src/services/tmdb and query hooks in src/pages/Home.tsx, src/pages/MovieDetails.tsx, and src/components/MovieCard/MovieCard.tsx
+- [X] T062 Audit scope boundaries to ensure no search, pagination, accounts, backend sync, sharing, custom ratings, or theme modes were added in src/App.tsx and src/pages/Home.tsx
+- [X] T063 Run and fix lint issues with `npm run lint` across src/
+- [X] T064 Run and fix type/build issues with `npm run build` across src/
+- [X] T065 Run and fix automated tests with `npm run test:run` across src/
+- [X] T066 Execute quickstart manual validation scenarios and record any unavailable verification notes in specs/001-cinelist-movie-catalog/quickstart.md
 
 ---
 

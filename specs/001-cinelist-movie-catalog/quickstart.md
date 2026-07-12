@@ -91,3 +91,12 @@ Expected outcome: Controls are reachable and usable by keyboard, and cards/detai
 
 - Data model: [data-model.md](./data-model.md)
 - UI and service contract: [contracts/ui-contract.md](./contracts/ui-contract.md)
+
+## Phase 8 Validation Notes
+
+- Automated route accessibility regressions cover header navigation, retry actions, favorite buttons, remove buttons, and not-found recovery.
+- Automated responsive layout checks cover MovieGrid grid classes and Favorites populated/empty layout classes.
+- Service isolation audit found TMDB `fetch` usage only in `src/services/tmdb/client.ts`.
+- Scope audit found no search, pagination, accounts, backend sync, sharing, custom ratings, or theme mode UI added to `src/App.tsx` or `src/pages/Home.tsx`.
+- CLI validation completed with `npm run lint`, `npm run build`, `npm run test:run`, and `npm run coverage`.
+- Browser-only live TMDB walkthrough was not executed in this CLI session; scenarios remain documented above for manual verification with a configured `.env.local`.
