@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { tmdbFetch } from "./apiRequest";
 import { getMovieDetails, getPopularMovies } from "./tmdbApi";
+import type { ApiError } from "@/types/errors";
 import type {
-  ApiError,
   TmdbCastMember,
   GetMovieDetailsResponse,
   GetPopularMoviesResponse,

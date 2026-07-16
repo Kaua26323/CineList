@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
+import type { ApiError } from "@/types/errors";
 import type { Movie } from "@/types/movies-protocol";
-import type { ApiError } from "@/types/api-protocol";
 import { getPopularMovies } from "@/services/tmdbApi";
 import { QUERY_KEYS, QUERY_STALE_TIMES_MS } from "@/utils/constants";
 

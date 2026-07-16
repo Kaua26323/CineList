@@ -1,4 +1,4 @@
-import type { ApiError } from "@/types/api-protocol";
+import type { ApiError } from "@/types/errors";
 import { TMDB_CONFIG, DEFAULT_LANGUAGE } from "@/utils/constants";
 
 export function getApiErrorMessage(status?: number): ApiError {

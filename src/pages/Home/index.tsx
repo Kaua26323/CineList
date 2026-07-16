@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router";
 
 import styles from "./home.module.css";
+import type { ApiError } from "@/types/errors";
 import { MovieCard } from "@/components/MovieCard";
-import type { ApiError } from "@/types/api-protocol";
 import { usePopularMovies } from "@/hooks/usePopularMovies";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorMessage } from "@/components/Errors/ErrorMessage";

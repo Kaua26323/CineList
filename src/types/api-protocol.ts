@@ -1,18 +1,4 @@
-export type ApiErrorCode =
-  | "CONFIGURATION_ERROR"
-  | "INVALID_MOVIE_ID"
-  | "MOVIE_NOT_FOUND"
-  | "NETWORK_ERROR"
-  | "RATE_LIMITED"
-  | "SERVICE_UNAVAILABLE"
-  | "UNKNOWN_ERROR";
-
-export interface ApiError {
-  title: string;
-  status?: number;
-  message: string;
-  code: ApiErrorCode;
-}
+export type { ApiError, ApiErrorCode } from "./errors";
 
 export interface TmdbGenre {
   id: number;

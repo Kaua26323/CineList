@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
-import type { ApiError } from "./types/api-protocol";
+import type { ApiError } from "./types/errors";
 import { QUERY_STALE_TIMES_MS } from "./utils/constants";
 import { ErrorBoundary } from "./components/Errors/ErrorBoundary";
 import { FavoritesProvider } from "@/contexts/favorites/favoritesProvider";

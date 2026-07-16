@@ -164,9 +164,10 @@ src/
 │   ├── favoritesStorage.ts   # localStorage CRUD
 ├── types/
 │   ├── api-protocol.ts       # Tmdb response types
+│   ├── errors.ts             # Errors types
 │   └── movies-protocol.ts    # TypeScript movie types
 ├── styles/
-│   └── globals.module.css    # Global styles
+│   └── globals.css           # Global styles
 ├── utils/
 │   └── constants.ts          # URLs, keys, constants
 ├── App.tsx                   # Main router

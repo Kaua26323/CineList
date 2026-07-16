@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getMovieDetails } from "@/services/tmdbApi";
-import type { ApiError } from "@/types/api-protocol";
+import type { ApiError } from "@/types/errors";
 import type { MovieDetails } from "@/types/movies-protocol";
+
+import { getMovieDetails } from "@/services/tmdbApi";
 import { QUERY_KEYS, QUERY_STALE_TIMES_MS } from "@/utils/constants";
 
 export function useMovieDetails(movieId: number) {

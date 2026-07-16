@@ -3,9 +3,9 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import type { ApiError } from "@/types/errors";
 import { useMovieDetails } from "./useMovieDetails";
 import { getMovieDetails } from "@/services/tmdbApi";
-import type { ApiError } from "@/types/api-protocol";
 import type { MovieDetails } from "@/types/movies-protocol";
 
 vi.mock("@/services/tmdbApi", () => ({

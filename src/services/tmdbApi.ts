@@ -1,8 +1,8 @@
 import { tmdbFetch } from "./apiRequest";
+import type { ApiError } from "@/types/errors";
 import { TMDB_CONFIG, TMDB_ENDPOINTS } from "@/utils/constants";
 import type { CastMember, Movie, MovieDetails } from "@/types/movies-protocol";
 import type {
-  ApiError,
   GetMovieDetailsResponse,
   GetPopularMoviesResponse,
   TmdbCastMember,
