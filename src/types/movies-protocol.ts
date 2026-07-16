@@ -35,10 +35,10 @@ export interface MovieDetails {
   cast?: CastMember[];
   voteCount: number;
   voteAverage: number;
-  releaseDate: string;
   genres: MovieGenre[];
   runtime: number | null;
   posterPath: string | null;
+  releaseDate: string | null;
   backdropPath: string | null;
 }
 

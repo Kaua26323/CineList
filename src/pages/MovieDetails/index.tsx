@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useParams } from "react-router";
 
 import styles from "./movieDetails.module.css";
-import type { ApiError } from "@/types/api-protocol";
+import type { ApiError } from "@/types/errors";
 import type { MovieDetails } from "@/types/movies-protocol";
 
 import { NotFound } from "@/pages/NotFound";
@@ -36,7 +36,9 @@ function isMovieNotFoundError(error: ApiError | null): boolean {
   );
 }
 
-function getFormattedReleaseDate(releaseDate: string | undefined): string {
+function getFormattedReleaseDate(
+  releaseDate: string | null | undefined,
+): string {
   if (!releaseDate) {
     return "Release date unavailable";
   }
@@ -62,8 +64,7 @@ function getOverview(overview: string | undefined): string {
 function getMovieDetailsError(error: ApiError | null): ApiError {
   return {
     title: error?.title ?? "Error loading movies details",
-    message:
-      error?.message ?? "Unable to load movie details. Please try again",
+    message: error?.message ?? "Unable to load movie details. Please try again",
     code: error?.code ?? "UNKNOWN_ERROR",
   };
 }

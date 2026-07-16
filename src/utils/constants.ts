@@ -58,7 +58,7 @@ export function getFormattedRuntime(
   return `${hours}h ${min}m`;
 }
 
-export function getMovieYear(releaseDate: string | undefined): string {
+export function getMovieYear(releaseDate: string | null | undefined): string {
   return releaseDate ? releaseDate.slice(0, 4) : "Unknown year";
 }
 
@@ -83,7 +83,10 @@ export function buildTmdImageUrl(
     return path;
   }
 
-  return `${TMDB_CONFIG.imageBaseUrl}/${size}${path}`;
+  const imageBaseUrl = TMDB_CONFIG.imageBaseUrl.replace(/\/$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+
+  return `${imageBaseUrl}/${size}${normalizedPath}`;
 }
 
 export function buildPosterUrl(
