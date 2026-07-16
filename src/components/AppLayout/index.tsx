@@ -1,17 +1,21 @@
+import { Clapperboard } from "lucide-react";
 import style from "./appLayout.module.css";
-import { Outlet, NavLink } from "react-router";
+import { Outlet, NavLink, Link } from "react-router";
 
 export function AppLayout() {
   return (
     <>
       <header className={style.headerBox}>
         <div className={style.headerContent}>
-          <h1 className={style.logo}>CineList</h1>
+          <Link to="/" className={style.logo}>
+            <Clapperboard aria-hidden="true" size={29} />
+            <span>CineList</span>
+          </Link>
           <nav className={style.navLinks}>
             <NavLink
               to="/"
               className={({ isActive }) =>
-                isActive ? style.active : undefined
+                `${style.navLink} ${isActive ? style.active : undefined}`
               }
             >
               Home
@@ -20,7 +24,7 @@ export function AppLayout() {
             <NavLink
               to="/favorites"
               className={({ isActive }) =>
-                isActive ? style.active : undefined
+                `${style.navLink} ${isActive ? style.active : undefined}`
               }
             >
               Favorites

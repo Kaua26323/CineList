@@ -1,12 +1,12 @@
 .container {
   width: 100%;
-  max-width: 75rem;
-  padding: 0 1.2rem;
-  margin: 1rem auto;
+  max-width: var(--content-width);
+  padding: 0 var(--space-4);
+  margin: var(--space-5) auto var(--space-7);
 }
 
 .header {
-  margin-bottom: 1.3rem;
+  margin-bottom: var(--space-5);
 }
 
 .title {
@@ -19,7 +19,7 @@
   display: grid;
   place-items: center;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
+  gap: var(--space-4);
 }
 
 @media (min-width: 640px) {

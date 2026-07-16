@@ -1,59 +1,35 @@
 .container {
   width: 100%;
-  max-width: 75rem;
+  max-width: var(--content-width);
   display: flex;
   flex-direction: column;
-  padding: 1.2rem;
+  padding: var(--space-5) var(--space-4) var(--space-7);
   margin: 0 auto;
-  gap: 1rem;
-}
-
-.backButton,
-.favoriteButton {
-  align-self: flex-start;
-  padding: 0.7rem 1rem;
-  border: 1px solid var(--color-primary-700);
-  border-radius: 6px;
-  font: inherit;
-  font-weight: bold;
-}
-
-.favoriteButton {
-  width: 100%;
-  justify-self: stretch;
-  border-color: #0f766e;
-  background-color: #0f766e;
-  color: var(--color-text);
-  align-self: center;
+  gap: var(--space-5);
 }
 
 .layout {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
   align-items: start;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 .postPanel {
   width: 100%;
-  max-width: 20rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-}
-
-.postPanel div,
-.postPanel p {
-  align-self: center;
+  gap: var(--space-3);
 }
 
 .postPanel p {
   width: 100%;
-  padding: 0.6rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   margin: 0;
-  border: 1.5px solid #1c4d2e;
-  border-radius: 4px;
-  background-color: #7ef7dd;
-  color: #115e59;
+  border: 1px solid rgb(232 201 122 / 28%);
+  border-radius: var(--radius-sm);
+  background-color: rgb(232 201 122 / 10%);
+  color: var(--color-primary-light);
   font-weight: bold;
   text-align: center;
 }
@@ -62,16 +38,16 @@
 .posterFallback {
   width: 100%;
   aspect-ratio: 2 / 3;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   background-color: var(--color-card);
   object-fit: cover;
 }
 
 .posterFallback {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
   color: var(--color-text-muted);
   text-align: center;
 }
@@ -79,38 +55,39 @@
 .detailsSection {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-5);
 }
 
 .heading {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: var(--space-2);
 }
 
 .heading p {
-  text-align: start;
-  color: #0f766e;
+  color: var(--color-primary);
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .heading h1 {
-  font-size: 2.4rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.1;
 }
+
 .metadata {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .metadata div {
   display: grid;
-  gap: 0.2rem;
-  padding: 0.9rem;
+  gap: var(--space-1);
+  padding: var(--space-4);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: #121212;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
 }
 
 .metadata dt {
@@ -126,21 +103,24 @@
 .castSection {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-3);
 }
 
-.overviewSection h2 {
-  font-size: 1.6rem;
+.overviewSection h2,
+.castSection h2 {
+  font-size: 1.5rem;
 }
 
-.overviewSection p {
+.overviewSection p,
+.castSection > p {
   color: var(--color-text-muted);
+  line-height: 1.6;
 }
 
 .castList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -150,18 +130,18 @@
   display: grid;
   grid-template-columns: 3.5rem minmax(0, 1fr);
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
+  gap: var(--space-3);
+  padding: var(--space-3);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: #121212;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
 }
 
 .castMemberImage,
 .profileFallback {
   width: 3.5rem;
   aspect-ratio: 1;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   object-fit: cover;
 }
 
@@ -182,16 +162,16 @@
   color: var(--color-text);
   font-weight: bold;
 }
+
 .castCharacter {
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 760px) {
   .layout {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
   }
 
   .postPanel {
@@ -199,17 +179,20 @@
     margin: 0 auto;
   }
 
-  .posterImage,
-  .posterFallback {
-    border-radius: 10px;
-  }
-
   .heading {
     align-items: center;
+    text-align: center;
   }
 
   .overviewSection,
   .castSection {
     text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .metadata,
+  .castList {
+    grid-template-columns: 1fr;
   }
 }

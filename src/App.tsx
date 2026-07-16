@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
-import "./globals.css";
+import "@/styles/globals.css";
 import { Home } from "./pages/Home";
 import { AppLayout } from "@/components/AppLayout";
 import { MovieDetails } from "./pages/MovieDetails";

@@ -1,52 +1,37 @@
 .notFoundContainer {
   width: 100%;
-  height: calc(100vh - 4rem);
+  min-height: calc(100dvh - 4rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 100px;
+  padding: var(--space-6) var(--space-4);
 }
+
 .notFoundContent {
+  width: min(100%, 32rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  gap: 0.6rem;
-}
-.codeError {
-  font-size: 6rem;
-  font-weight: bold;
-  color: var(--color-danger);
-}
-
-.errorTitle {
-  font-size: 2.5rem;
-  color: var(--color-danger);
-}
-.errorMessage {
-  color: var(--color-text-muted);
-  font-size: 1.5rem;
+  gap: var(--space-3);
   text-align: center;
 }
 
-@media (max-width: 800px) {
-  .errorMessage {
-    color: var(--color-text-muted);
-    font-size: 1.3rem;
-  }
+.codeError {
+  color: var(--color-danger);
+  font-size: clamp(4rem, 16vw, 6rem);
+  font-weight: bold;
+  line-height: 1;
 }
 
-@media (max-width: 700px) {
-  .codeError {
-    font-size: 4rem;
-  }
+.errorTitle {
+  color: var(--color-text);
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  line-height: 1.15;
+}
 
-  .errorTitle {
-    font-size: 2rem;
-  }
-  .errorMessage {
-    color: var(--color-text-muted);
-    font-size: 1rem;
-  }
+.errorMessage {
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.5;
 }
