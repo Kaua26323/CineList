@@ -13,13 +13,20 @@ import {
 import {
   addFavoriteToStorage,
   removeFavoriteFromStorage,
-  getFavoritesMoviesFromStorage,
+  getFavoriteMoviesFromStorage,
 } from "@/services/favoritesStorage";
+import type { StorageError } from "@/types/errors";
 
 export function FavoritesProvider({ children }: PropsWithChildren) {
-  const [favorites, setFavorites] = useState<FavoriteMovie[]>(() => {
-    return getFavoritesMoviesFromStorage();
+  const [initialState] = useState(() => {
+    return getFavoriteMoviesFromStorage();
   });
+  const [storageError, setStorageError] = useState<StorageError | null>(
+    initialState.success ? null : initialState.error,
+  );
+  const [favorites, setFavorites] = useState<FavoriteMovie[]>(
+    initialState.favorites,
+  );
 
   useEffect(() => {
     function handleStorage(event: StorageEvent): void {
@@ -27,7 +34,14 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
         return;
       }
 
-      setFavorites(getFavoritesMoviesFromStorage());
+      const { success, favorites, error } = getFavoriteMoviesFromStorage();
+      if (!success) {
+        setStorageError(error);
+        return;
+      }
+
+      setFavorites(favorites);
+      setStorageError(null);
     }
 
     window.addEventListener("storage", handleStorage);
@@ -39,11 +53,27 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
 
   const addFavoriteMovie = useCallback((movie: MovieDetails): void => {
     const favoriteMovie = createFavoriteMovie(movie);
-    setFavorites(addFavoriteToStorage(favoriteMovie));
+
+    const result = addFavoriteToStorage(favoriteMovie);
+    if (!Array.isArray(result)) {
+      setStorageError(result);
+      return;
+    }
+
+    setFavorites(result);
+    setStorageError(null);
   }, []);
 
   const removeFavoriteMovie = useCallback((movieId: number): void => {
-    setFavorites(removeFavoriteFromStorage(movieId));
+    const result = removeFavoriteFromStorage(movieId);
+
+    if (!Array.isArray(result)) {
+      setStorageError(result);
+      return;
+    }
+
+    setFavorites(result);
+    setStorageError(null);
   }, []);
 
   const isFavorited = useCallback(
@@ -56,11 +86,18 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
   const value = useMemo<FavoritesContextProps>(
     () => ({
       favorites,
+      storageError,
       isFavorited,
       addFavoriteMovie,
       removeFavoriteMovie,
     }),
-    [favorites, isFavorited, addFavoriteMovie, removeFavoriteMovie],
+    [
+      favorites,
+      storageError,
+      isFavorited,
+      addFavoriteMovie,
+      removeFavoriteMovie,
+    ],
   );
 
   return (

@@ -37,6 +37,7 @@ const favoriteMovies: FavoriteMovie[] = [
     title: "A Hidden Life",
     voteAverage: 7.1,
     genres: [],
+    releaseDate: null,
     runtime: null,
     posterPath: null,
   },
@@ -49,6 +50,7 @@ function mockFavoritesContext(favorites: FavoriteMovie[] = []) {
 
   mockedUseFavoritesContext.mockReturnValue({
     favorites,
+    storageError: null,
     isFavorited: vi.fn(),
     addFavoriteMovie: vi.fn(),
     removeFavoriteMovie,
@@ -81,7 +83,7 @@ describe("Favorites (unity)", () => {
 
     expect(screen.getByText("My Collection")).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Favorites" }),
+      screen.getByRole("heading", { name: "Your favorites" }),
     ).toBeInTheDocument();
     expect(screen.getByText("0")).toBeInTheDocument();
     expect(

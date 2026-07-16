@@ -47,7 +47,7 @@ export interface FavoriteMovie {
   title: string;
   voteAverage: number;
   genres: MovieGenre[];
-  releaseDate?: string;
   runtime: number | null;
   posterPath: string | null;
+  releaseDate: string | null;
 }

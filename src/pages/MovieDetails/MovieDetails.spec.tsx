@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 
 import { MovieDetails } from "./index";
-import type { ApiError } from "@/types/api-protocol";
+import type { ApiError } from "@/types/errors";
 import { useMovieDetails } from "@/hooks/useMovieDetails";
 import { useFavoritesContext } from "@/hooks/useFavoritesContext";
 import type { MovieDetails as MovieDetailsType } from "@/types/movies-protocol";
@@ -110,6 +110,7 @@ function mockFavoritesContext(
 
   mockedUseFavoritesContext.mockReturnValue({
     favorites: [],
+    storageError: null,
     isFavorited,
     addFavoriteMovie,
     removeFavoriteMovie,

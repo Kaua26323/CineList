@@ -18,6 +18,7 @@ import {
   buildPosterUrl,
   getFormattedRuntime,
 } from "@/utils/constants";
+import { ErrorMessage } from "@/components/Errors/ErrorMessage";
 
 function getFormattedGenres(movie: FavoriteMovie | undefined): string[] {
   return movie && movie.genres.length > 0
@@ -25,10 +26,26 @@ function getFormattedGenres(movie: FavoriteMovie | undefined): string[] {
     : ["No genres listed"];
 }
 
+function EmptyFavoriteState({ buttonAction }: { buttonAction: () => void }) {
+  return (
+    <section className={styles.emptyState}>
+      <div>
+        <Heart size={32} />
+      </div>
+      <h2>No favorite movies yet</h2>
+      <p>Browse movies and add your favorites to build your list.</p>
+      <Button size="180px" variant="primary" onClick={buttonAction}>
+        <Search size={16} /> Browse movies
+      </Button>
+    </section>
+  );
+}
+
 export function Favorites() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { favorites, removeFavoriteMovie } = useFavoritesContext();
+  const { favorites, storageError, removeFavoriteMovie } =
+    useFavoritesContext();
 
   const handleDetailsClick = (movieId: number): void => {
     navigate(`/movie/${movieId}`, { state: { from: location.pathname } });
@@ -47,23 +64,24 @@ export function Favorites() {
       <div className={styles.heading}>
         <p>My Collection</p>
         <div className={styles.titleDiv}>
-          <h1>Favorites</h1>
+          <h1>Your favorites</h1>
           <span>{favorites.length}</span>
         </div>
         <div className={styles.headingLine}></div>
       </div>
 
       {favorites.length === 0 && (
-        <section className={styles.emptyState}>
-          <div>
-            <Heart size={32} />
-          </div>
-          <h2>No favorite movies yet</h2>
-          <p>Browse movies and add your favorites to build your list.</p>
-          <Button size="180px" variant="primary" onClick={handleHome}>
-            <Search size={16} /> Browse movies
-          </Button>
-        </section>
+        <EmptyFavoriteState buttonAction={handleHome} />
+      )}
+
+      {storageError && (
+        <ErrorMessage
+          error={{
+            title: storageError.title,
+            message: storageError.message,
+            code: storageError.code,
+          }}
+        />
       )}
 
       <section className={styles.favoritesSection}>
@@ -84,7 +102,7 @@ export function Favorites() {
                     <div className={styles.posterFallback}> No poster</div>
                   )}
                   <p>
-                    <Star size={11} fill="var(--color-primary-300)" />
+                    <Star size={11} fill="var(--color-primary)" />
                     {movie.voteAverage.toFixed(1)} - <Calendar size={11} />
                     {getMovieYear(movie.releaseDate)}
                   </p>

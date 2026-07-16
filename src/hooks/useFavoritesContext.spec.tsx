@@ -79,6 +79,7 @@ describe("useFavoritesContext (unity)", () => {
   it("should return context value when used inside provider", () => {
     const contextValue: FavoritesContextProps = {
       favorites: [favoriteMovie],
+      storageError: null,
       isFavorited: vi.fn((movieId: number) => movieId === favoriteMovie.id),
       addFavoriteMovie: vi.fn(),
       removeFavoriteMovie: vi.fn(),

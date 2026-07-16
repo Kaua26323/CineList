@@ -3,11 +3,10 @@ import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import type { FavoriteMovie } from "@/types/movies-protocol";
 import {
-  isFavorited,
   addFavoriteToStorage,
   removeFavoriteFromStorage,
-  saveFavoriteMovieToStorage,
-  getFavoritesMoviesFromStorage,
+  saveFavoriteMoviesToStorage,
+  getFavoriteMoviesFromStorage,
 } from "./favoritesStorage";
 
 const favoriteMovie: FavoriteMovie = {
@@ -60,21 +59,26 @@ describe("favoritesStorage (unity)", () => {
     vi.restoreAllMocks();
   });
 
-  describe("getFavoritesMoviesFromStorage", () => {
+  describe("getFavoriteMoviesFromStorage", () => {
     it("should return empty list when no favorites are stored", () => {
-      expect(getFavoritesMoviesFromStorage()).toEqual([]);
+      expect(getFavoriteMoviesFromStorage()).toEqual({
+        success: true,
+        favorites: [],
+        error: null,
+      });
     });
 
     it("should return valid favorite movies from localStorage", () => {
       saveFavoritesToStorage([favoriteMovie, anotherFavoriteMovie]);
 
-      expect(getFavoritesMoviesFromStorage()).toEqual([
-        favoriteMovie,
-        anotherFavoriteMovie,
-      ]);
+      expect(getFavoriteMoviesFromStorage()).toEqual({
+        success: true,
+        favorites: [favoriteMovie, anotherFavoriteMovie],
+        error: null,
+      });
     });
 
-    it("should ignore invalid payloads and invalid favorite movies", () => {
+    it("should ignore invalid favorite movies", () => {
       const invalidFavoriteMovie = {
         ...favoriteMovie,
         id: 0,
@@ -95,13 +99,25 @@ describe("favoritesStorage (unity)", () => {
         },
       ]);
 
-      expect(getFavoritesMoviesFromStorage()).toEqual([favoriteMovie]);
+      expect(getFavoriteMoviesFromStorage()).toEqual({
+        success: true,
+        favorites: [favoriteMovie],
+        error: null,
+      });
     });
 
-    it("should return empty list when stored payload is not an array", () => {
+    it("should return invalid data error when stored payload is not an array", () => {
       saveFavoritesToStorage({ favorites: [favoriteMovie] });
 
-      expect(getFavoritesMoviesFromStorage()).toEqual([]);
+      expect(getFavoriteMoviesFromStorage()).toEqual({
+        success: false,
+        favorites: [],
+        error: {
+          title: "Invalid Data.",
+          message: "The saved favorites data is invalid.",
+          code: "INVALID_DATA",
+        },
+      });
     });
 
     it("should deduplicate favorite movies by ID preserving the last value", () => {
@@ -111,13 +127,14 @@ describe("favoritesStorage (unity)", () => {
         updatedFavoriteMovie,
       ]);
 
-      expect(getFavoritesMoviesFromStorage()).toEqual([
-        updatedFavoriteMovie,
-        anotherFavoriteMovie,
-      ]);
+      expect(getFavoriteMoviesFromStorage()).toEqual({
+        success: true,
+        favorites: [updatedFavoriteMovie, anotherFavoriteMovie],
+        error: null,
+      });
     });
 
-    it("should return empty list and log error when stored JSON is invalid", () => {
+    it("should return invalid data error and log error when stored JSON is invalid", () => {
       const consoleErrorSpy = vi
         .spyOn(console, "error")
         .mockImplementation(() => undefined);
@@ -127,26 +144,36 @@ describe("favoritesStorage (unity)", () => {
         "{invalid-json",
       );
 
-      expect(getFavoritesMoviesFromStorage()).toEqual([]);
+      expect(getFavoriteMoviesFromStorage()).toEqual({
+        success: false,
+        favorites: [],
+        error: {
+          title: "Invalid data",
+          message: "The saved favorites data could not be understood.",
+          code: "INVALID_DATA",
+        },
+      });
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         expect.stringContaining(
           "[CineList]: Unable to read favorites movies from localStorage",
         ),
+        expect.any(SyntaxError),
       );
     });
   });
 
-  describe("saveFavoriteMovieToStorage", () => {
-    it("should save favorite movies to localStorage and return the same list", () => {
+  describe("saveFavoriteMoviesToStorage", () => {
+    it("should save favorite movies to localStorage", () => {
       const favorites = [favoriteMovie, anotherFavoriteMovie];
 
-      const savedFavorites = saveFavoriteMovieToStorage(favorites);
-
-      expect(savedFavorites).toBe(favorites);
+      expect(saveFavoriteMoviesToStorage(favorites)).toEqual({
+        success: true,
+        error: null,
+      });
       expect(getStoredFavorites()).toEqual(favorites);
     });
 
-    it("should return favorite movies and log error when localStorage save fails", () => {
+    it("should return write error and log error when localStorage save fails", () => {
       const consoleErrorSpy = vi
         .spyOn(console, "error")
         .mockImplementation(() => undefined);
@@ -154,13 +181,19 @@ describe("favoritesStorage (unity)", () => {
         throw new Error("Storage is full");
       });
 
-      const favorites = [favoriteMovie];
-
-      expect(saveFavoriteMovieToStorage(favorites)).toBe(favorites);
+      expect(saveFavoriteMoviesToStorage([favoriteMovie])).toEqual({
+        success: false,
+        error: {
+          title: "Unable to save favorites movies.",
+          message: "Your favorites could not be saved. Please try again later.",
+          code: "WRITE_FAILED",
+        },
+      });
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         expect.stringContaining(
           "[CineList]: Unable to save favorites movies to localStorage.",
         ),
+        expect.any(Error),
       );
     });
   });
@@ -201,20 +234,6 @@ describe("favoritesStorage (unity)", () => {
         anotherFavoriteMovie,
       ]);
       expect(getStoredFavorites()).toEqual([anotherFavoriteMovie]);
-    });
-  });
-
-  describe("isFavorited", () => {
-    it("should return true when movie is stored as favorite", () => {
-      saveFavoritesToStorage([favoriteMovie]);
-
-      expect(isFavorited(favoriteMovie.id)).toBe(true);
-    });
-
-    it("should return false when movie is not stored as favorite", () => {
-      saveFavoritesToStorage([favoriteMovie]);
-
-      expect(isFavorited(anotherFavoriteMovie.id)).toBe(false);
     });
   });
 });

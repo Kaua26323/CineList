@@ -1,4 +1,3 @@
-export type { ApiError, ApiErrorCode } from "./errors";
 
 export interface TmdbGenre {
   id: number;

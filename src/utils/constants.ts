@@ -32,8 +32,8 @@ export function createFavoriteMovie(movie: MovieDetails): FavoriteMovie {
     genres: movie.genres || [],
     posterPath: movie.posterPath,
     voteAverage: movie.voteAverage,
-    runtime: movie.runtime || null,
-    releaseDate: movie.releaseDate || undefined,
+    runtime: movie.runtime,
+    releaseDate: movie.releaseDate || null,
   };
 }
 
