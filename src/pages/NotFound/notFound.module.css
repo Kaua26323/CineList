@@ -1,0 +1,37 @@
+.notFoundContainer {
+  width: 100%;
+  min-height: calc(100dvh - 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.notFoundContent {
+  width: min(100%, 32rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.codeError {
+  color: var(--color-danger);
+  font-size: clamp(4rem, 16vw, 6rem);
+  font-weight: bold;
+  line-height: 1;
+}
+
+.errorTitle {
+  color: var(--color-text);
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.errorMessage {
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.5;
+}

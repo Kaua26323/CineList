@@ -1,0 +1,64 @@
+.primary,
+.secondary,
+.destructive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.2;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.primary:focus-visible,
+.secondary:focus-visible,
+.destructive:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.primary:hover {
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.secondary {
+  border-color: var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.secondary:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-raised);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.destructive {
+  border-color: rgb(229 9 20 / 35%);
+  background-color: rgb(229 9 20 / 10%);
+  color: var(--color-danger-hover);
+}
+
+.destructive:hover {
+  border-color: var(--color-danger);
+  background-color: rgb(229 9 20 / 18%);
+  color: var(--color-text);
+  transform: translateY(-1px);
+}

@@ -1,0 +1,86 @@
+.card {
+  width: 100%;
+  max-width: 12rem;
+}
+
+.contentButton {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.contentButton:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.figure {
+  position: relative;
+  margin: 0;
+}
+
+.posterImg,
+.posterFallback {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-card);
+  object-fit: cover;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.contentButton:hover .posterImg,
+.contentButton:hover .posterFallback {
+  border-color: rgb(232 201 122 / 35%);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 28%);
+  transform: translateY(-3px);
+}
+
+.posterFallback {
+  display: grid;
+  padding: var(--space-4);
+  text-align: center;
+  place-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.favoriteBadge {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  max-width: calc(100% - var(--space-4));
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.title {
+  margin-top: var(--space-2);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.25;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .card {
+    max-width: 11rem;
+  }
+}
